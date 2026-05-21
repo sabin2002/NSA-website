@@ -23,6 +23,9 @@ app.use("/api/jobs", jobRoutes);
 const budgetRoutes = require("./routes/budgetRoutes");
 app.use("/api/budget", budgetRoutes);
 
+const surveyRoutes = require("./routes/surveyRoutes");
+app.use("/api/surveys", surveyRoutes);
+
 app.get("/", (req, res) => {
   res.send("NSA Website Backend is Running");
 });
