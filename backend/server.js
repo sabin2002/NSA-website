@@ -10,8 +10,12 @@ app.use(cors());
 app.use(express.json());
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
+
 const eventRoutes = require("./routes/eventRoutes");
 app.use("/api/events", eventRoutes);
+
+const noticeRoutes = require("./routes/noticeRoutes");
+app.use("/api/notices", noticeRoutes);
 
 app.get("/", (req, res) => {
   res.send("NSA Website Backend is Running");
