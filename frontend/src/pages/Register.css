@@ -1,0 +1,242 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+.register-page {
+  min-height: 100vh;
+  background: linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0.15)),
+    url("https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1600");
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+}
+
+.top-nav {
+  height: 75px;
+  background: #8b1010;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 70px;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.logo small {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nav-links button {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.nav-links .active {
+  background: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.hero {
+  text-align: center;
+  padding: 55px 20px 30px;
+}
+
+.hero h1 {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  color: #111936;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 25px;
+}
+
+.register-card {
+  max-width: 1000px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.93);
+  border: 2px solid #8b1010;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  padding: 25px;
+  gap: 30px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+}
+
+.info-panel {
+  background: #f8eeee;
+  border-radius: 12px;
+  padding: 35px 25px;
+  text-align: center;
+}
+
+.info-panel .icon {
+  font-size: 60px;
+}
+
+.info-panel h3 {
+  font-family: Georgia, serif;
+  margin: 20px 0;
+}
+
+.info-panel p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.info-panel ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 25px;
+  text-align: left;
+}
+
+.info-panel li {
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+.form-panel {
+  text-align: left;
+}
+
+.form-panel h3 {
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.grid input,
+.grid select,
+.otp-box input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.otp-box {
+  display: grid;
+  grid-template-columns: 120px 1fr 130px;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.otp-box button {
+  border: none;
+  background: #b41616;
+  color: white;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+.terms {
+  display: block;
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+.create-btn {
+  width: 100%;
+  background: #b41616;
+  color: white;
+  border: none;
+  padding: 13px;
+  border-radius: 7px;
+  font-weight: 700;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-link span {
+  color: #0d47a1;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+footer {
+  background: #8b1010;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 25px;
+  margin-top: 35px;
+}
+
+footer h3 {
+  color: #ffb000;
+}
+
+@media (max-width: 900px) {
+  .top-nav {
+    padding: 15px;
+    height: auto;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .register-card {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .otp-box {
+    grid-template-columns: 1fr;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
