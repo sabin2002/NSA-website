@@ -1,5 +1,5 @@
 function Events() {
-  return <h1>Events Page</h1>;
+  return <h1>Events Pageevents</h1>;
 }
 
 export default Events;
