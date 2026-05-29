@@ -1,279 +1,191 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
-  FaBullhorn,
-  FaGraduationCap,
-  FaFileAlt,
-  FaCalendarAlt,
-  FaBook,
-  FaInfoCircle,
-  FaSearch,
-  FaFacebook,
-  FaInstagram,
-  FaYoutube,
-  FaEnvelope,
+  FaHome, FaBriefcase, FaCalendarAlt, FaBullhorn, FaBookOpen,
+  FaInfoCircle, FaSearch, FaFilter, FaUndo, FaFacebook,
+  FaInstagram, FaYoutube, FaEnvelope, FaGraduationCap, FaFileAlt
 } from "react-icons/fa";
+import "./Notices.css";
 
 function Notices() {
+  const navigate = useNavigate();
+
   const notices = [
     {
       title: "Fingerprinting Registration",
       category: "General",
+      text: "Mandatory for all new students. Please complete your fingerprinting registration as per the schedule.",
+      date: "April 10, 2026",
+      by: "Admin",
       icon: <FaBullhorn />,
-      color: "bg-red-100 text-red-600",
-      description:
-        "Mandatory for all new students. Please complete your fingerprinting registration.",
-      date: "April 10, 2024",
+      color: "red",
     },
     {
       title: "Scholarship Application Open",
       category: "Scholarship",
+      text: "Apply before April 30, 2026. Don't miss this opportunity!",
+      date: "April 8, 2026",
+      by: "Admin",
       icon: <FaGraduationCap />,
-      color: "bg-green-100 text-green-600",
-      description:
-        "Apply before April 30, 2024. Don't miss this opportunity.",
-      date: "April 8, 2024",
+      color: "green",
     },
     {
       title: "General Meeting Notice",
       category: "Notice",
+      text: "General meeting will be held on April 20, 2026 at 3:00 PM in the main hall.",
+      date: "April 5, 2026",
+      by: "Admin",
       icon: <FaFileAlt />,
-      color: "bg-blue-100 text-blue-600",
-      description:
-        "General meeting will be held on April 20, 2024 at 3:00 PM.",
-      date: "April 5, 2024",
+      color: "blue",
     },
     {
       title: "Cultural Night Program Update",
       category: "Event",
+      text: "The Cultural Night Program is confirmed on April 15, 2026. Come and enjoy the performances!",
+      date: "April 2, 2026",
+      by: "User",
       icon: <FaCalendarAlt />,
-      color: "bg-purple-100 text-purple-600",
-      description:
-        "The Cultural Night Program is confirmed on April 15, 2024.",
-      date: "April 2, 2024",
+      color: "purple",
     },
     {
       title: "Final Exam Routine Published",
       category: "Academic",
-      icon: <FaBook />,
-      color: "bg-yellow-100 text-yellow-600",
-      description:
-        "Final exam routine for Spring 2024 has been published.",
-      date: "March 30, 2024",
+      text: "Final exam routine for Spring 2026 has been published. Check the academic section for details.",
+      date: "March 30, 2026",
+      by: "Admin",
+      icon: <FaBookOpen />,
+      color: "orange",
     },
     {
       title: "Office Closed on Public Holiday",
       category: "General",
+      text: "The NSA office will remain closed on April 14, 2026.",
+      date: "March 28, 2026",
+      by: "Admin",
       icon: <FaInfoCircle />,
-      color: "bg-gray-100 text-gray-600",
-      description:
-        "The NSA office will remain closed on April 14, 2024.",
-      date: "March 28, 2024",
+      color: "gray",
     },
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-
-      {/* HERO SECTION */}
-      <div
-        className="relative h-[300px] bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
-
-        <div className="relative text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Announcements</h1>
-
-          <p className="text-lg">
-            Stay informed with the latest updates and notices.
-          </p>
-        </div>
-      </div>
-
-      {/* MAIN CONTENT */}
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-4 gap-6">
-
-        {/* SIDEBAR */}
-        <div className="bg-white rounded-xl shadow-md p-5 h-fit">
-
-          <h2 className="text-xl font-bold mb-5">
-            Filter Announcements
-          </h2>
-
-          {/* SEARCH */}
-          <div className="mb-6">
-            <label className="font-semibold block mb-2">
-              Search
-            </label>
-
-            <div className="flex border rounded-lg overflow-hidden">
-              <input
-                type="text"
-                placeholder="Search announcements..."
-                className="w-full px-3 py-2 outline-none"
-              />
-
-              <button className="px-3 bg-gray-100">
-                <FaSearch />
-              </button>
-            </div>
-          </div>
-
-          {/* CATEGORY */}
-          <div className="mb-6">
-            <label className="font-semibold block mb-3">
-              Category
-            </label>
-
-            <div className="space-y-2">
-              <div><input type="checkbox" /> General</div>
-              <div><input type="checkbox" /> Academic</div>
-              <div><input type="checkbox" /> Scholarship</div>
-              <div><input type="checkbox" /> Event</div>
-              <div><input type="checkbox" /> Notice</div>
-            </div>
-          </div>
-
-          {/* DATE */}
-          <div className="mb-6">
-            <label className="font-semibold block mb-2">
-              Date
-            </label>
-
-            <input
-              type="date"
-              className="w-full border rounded-lg px-3 py-2"
-            />
-          </div>
-
-          <button className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 mb-3">
-            Apply Filters
-          </button>
-
-          <button className="w-full border py-3 rounded-lg hover:bg-gray-100">
-            Clear Filters
-          </button>
+    <div className="notices-page">
+      <nav className="notices-nav">
+        <div className="notices-logo" onClick={() => navigate("/home")}>
+          <h2>NEPALESE</h2>
+          <span>Student Association</span>
         </div>
 
-        {/* ANNOUNCEMENTS */}
-        <div className="lg:col-span-3 bg-white rounded-xl shadow-md p-5">
+        <div className="notices-menu">
+          <button onClick={() => navigate("/home")}><FaHome /> Home</button>
+          <button onClick={() => navigate("/jobs")}><FaBriefcase /> Jobs</button>
+          <button onClick={() => navigate("/events")}><FaCalendarAlt /> Events</button>
+          <button className="active"><FaBullhorn /> Announcements</button>
+          <button><FaBookOpen /> Resources</button>
+          <button onClick={() => navigate("/about")}><FaInfoCircle /> About Us</button>
+          <button onClick={() => navigate("/")}>Login</button>
+          <button onClick={() => navigate("/register")}>Register</button>
+        </div>
+      </nav>
 
-          <h2 className="text-2xl font-bold mb-6">
-            All Announcements
-          </h2>
+      <section className="notices-hero">
+        <h1>Announcements</h1>
+        <div className="notices-divider"></div>
+        <p>Stay informed with the latest updates, notices and important information.</p>
+      </section>
 
-          <div className="space-y-5">
-            {notices.map((notice, index) => (
-              <div
-                key={index}
-                className="border rounded-xl p-5 flex flex-col md:flex-row justify-between gap-5 hover:shadow-md transition"
-              >
+      <main className="notices-layout">
+        <aside className="notice-filter">
+          <h3>Filter Announcements</h3>
 
-                <div className="flex gap-4">
+          <label>Search</label>
+          <div className="search-box">
+            <input placeholder="Search announcements..." />
+            <FaSearch />
+          </div>
 
-                  <div
-                    className={`w-16 h-16 rounded-xl flex items-center justify-center text-2xl ${notice.color}`}
-                  >
-                    {notice.icon}
-                  </div>
+          <h4>Category</h4>
+          <label><input type="checkbox" defaultChecked /> All Categories</label>
+          <label><input type="checkbox" /> General</label>
+          <label><input type="checkbox" /> Academic</label>
+          <label><input type="checkbox" /> Scholarship</label>
+          <label><input type="checkbox" /> Event</label>
+          <label><input type="checkbox" /> Notice</label>
+          <label><input type="checkbox" /> Other</label>
 
-                  <div>
-                    <h3 className="text-xl font-bold">
-                      {notice.title}
-                    </h3>
+          <h4>Posted By</h4>
+          <label><input type="radio" name="posted" defaultChecked /> All</label>
+          <label><input type="radio" name="posted" /> Admin</label>
+          <label><input type="radio" name="posted" /> User</label>
 
-                    <span className="text-sm bg-gray-100 px-3 py-1 rounded-full">
-                      {notice.category}
-                    </span>
+          <h4>Date</h4>
+          <input type="date" />
 
-                    <p className="text-gray-600 mt-2">
-                      {notice.description}
-                    </p>
-                  </div>
-                </div>
+          <button className="apply-btn"><FaFilter /> Apply Filters</button>
+          <button className="clear-btn"><FaUndo /> Clear Filters</button>
+        </aside>
 
-                <div className="text-right">
-                  <p className="text-gray-500 mb-3">
-                    {notice.date}
-                  </p>
+        <section className="notice-list">
+          <div className="notice-header">
+            <h3>All Announcements</h3>
+            <span>Showing 1 to 6 of 6 announcements</span>
+          </div>
 
-                  <button className="border border-red-500 text-red-500 px-5 py-2 rounded-lg hover:bg-red-500 hover:text-white transition">
-                    View Details
-                  </button>
-                </div>
-
+          {notices.map((notice, index) => (
+            <div className="notice-row" key={index}>
+              <div className={`notice-icon ${notice.color}`}>
+                {notice.icon}
               </div>
-            ))}
-          </div>
 
-          {/* PAGINATION */}
-          <div className="flex justify-center mt-8 gap-3">
-            <button className="w-10 h-10 border rounded-lg">
-              {"<"}
-            </button>
+              <div className="notice-content">
+                <h3>{notice.title}</h3>
+                <span className={`notice-tag ${notice.color}`}>
+                  {notice.category}
+                </span>
+                <p>{notice.text}</p>
+              </div>
 
-            <button className="w-10 h-10 bg-red-600 text-white rounded-lg">
-              1
-            </button>
+              <div className="notice-meta">
+                <p>📅 {notice.date}</p>
+                <p>By {notice.by}</p>
+              </div>
 
-            <button className="w-10 h-10 border rounded-lg">
-              {">"}
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      {/* FOOTER */}
-      <footer className="bg-red-900 text-white py-8 px-8 mt-10">
-
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          <div>
-            <h2 className="text-xl font-bold mb-3">
-              Nepalese Student Association
-            </h2>
-
-            <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold mb-3">
-              Quick Links
-            </h2>
-
-            <div className="space-y-2">
-              <p>Home</p>
-              <p>Jobs</p>
-              <p>Events</p>
-              <p>Announcements</p>
+              <button className="details-btn">View Details</button>
             </div>
+          ))}
+
+          <div className="notice-pagination">
+            <button>‹</button>
+            <button className="current">1</button>
+            <button>›</button>
           </div>
+        </section>
+      </main>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3">
-              Follow Us
-            </h2>
-
-            <div className="flex gap-4 text-2xl">
-              <FaFacebook />
-              <FaInstagram />
-              <FaYoutube />
-              <FaEnvelope />
-            </div>
-          </div>
-
+      <footer className="notices-footer">
+        <div>
+          <h3>Nepalese Student Association (NSA)</h3>
+          <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
         </div>
 
-        <div className="text-center mt-8 border-t border-red-700 pt-4 text-sm">
-          © 2024 Nepalese Student Association
+        <div>
+          <h3>Quick Links</h3>
+          <p>Home | Jobs | Events | Announcements | Resources | About Us</p>
         </div>
 
+        <div>
+          <h3>Follow Us</h3>
+          <div className="footer-icons">
+            <FaFacebook />
+            <FaInstagram />
+            <FaYoutube />
+            <FaEnvelope />
+          </div>
+        </div>
+
+        <div>
+          <p>© 2026 Nepalese Student Association.</p>
+          <p>All rights reserved.</p>
+        </div>
       </footer>
-
     </div>
   );
 }

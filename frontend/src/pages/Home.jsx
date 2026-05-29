@@ -18,7 +18,7 @@ function Home() {
           <a onClick={() => navigate("/events")}>📅 Events</a>
           <a onClick={() => navigate("/notices")}>📢 Announcements</a>
           <a>📖 Resources</a>
-          <a>ⓘ About Us</a>
+          <a onClick={() => navigate("/about")}>ⓘ About Us</a>
           <button onClick={() => navigate("/")}>Login</button>
           <button onClick={() => navigate("/register")}>Register</button>
         </div>

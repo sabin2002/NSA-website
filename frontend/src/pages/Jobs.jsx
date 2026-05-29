@@ -1,191 +1,195 @@
-export default function Jobs() {
-  const jobs = [
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Jobs.css";
+
+function Jobs() {
+  const navigate = useNavigate();
+
+  const [jobs] = useState([
     {
       title: "Convenience Store Staff",
       company: "Naju Mart",
       location: "Naju, Korea",
       type: "Part-time",
-      description:
-        "Assist with store operations, customer service, and stocking shelves.",
+      author: "John Doe",
+      date: "April 10, 2026",
+      icon: "🛒",
+      desc: "Assist with store operations, customer service, stocking shelves, and maintaining cleanliness.",
     },
     {
       title: "Restaurant Kitchen Helper",
       company: "Himalayan Kitchen",
       location: "Seoul, Korea",
       type: "Part-time",
-      description:
-        "Support kitchen staff in food preparation and cleaning.",
+      author: "Admin",
+      date: "April 8, 2026",
+      icon: "🍴",
+      desc: "Support kitchen staff in food preparation, cleaning, and maintaining kitchen hygiene.",
     },
     {
       title: "Tutor (Nepali/English)",
       company: "Self-employed",
       location: "Online",
       type: "Freelance",
-      description:
-        "Teach Nepali or English language to students online.",
+      author: "Sita Gurung",
+      date: "April 5, 2026",
+      icon: "🎓",
+      desc: "Teach Nepali or English language to students of different age groups online.",
     },
     {
       title: "Delivery Driver",
       company: "Quick Delivery",
       location: "Busan, Korea",
       type: "Part-time",
-      description:
-        "Deliver packages and goods safely and on time.",
+      author: "Prakash Rai",
+      date: "April 3, 2026",
+      icon: "🚚",
+      desc: "Deliver packages and goods to customers safely and on time.",
     },
-  ];
+  ]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* HEADER */}
-      <div
-        className="h-[260px] bg-cover bg-center relative"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40"></div>
-
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-white text-center px-4">
-          <h1 className="text-6xl font-bold">Jobs</h1>
-
-          <p className="mt-4 text-lg max-w-2xl">
-            Find job opportunities and build your career in Korea.
-          </p>
-        </div>
-      </div>
-
-      {/* MAIN */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6 px-4 py-8">
-        {/* FILTER SIDEBAR */}
-        <div className="bg-white rounded-2xl shadow p-6 h-fit">
-          <h2 className="text-2xl font-bold mb-6">Search & Filter</h2>
-
-          <input
-            type="text"
-            placeholder="Search jobs..."
-            className="w-full border rounded-xl px-4 py-3 mb-5"
-          />
-
-          <div className="space-y-3">
-            <label className="block font-medium">Job Type</label>
-
-            <div className="space-y-2 text-gray-600">
-              <div>
-                <input type="checkbox" /> Full-time
-              </div>
-
-              <div>
-                <input type="checkbox" /> Part-time
-              </div>
-
-              <div>
-                <input type="checkbox" /> Freelance
-              </div>
-
-              <div>
-                <input type="checkbox" /> Internship
-              </div>
-            </div>
-          </div>
-
-          <button className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
-            Search Jobs
-          </button>
+    <div className="jobs-page">
+      <nav className="jobs-nav">
+        <div className="jobs-logo">
+          <h2>NEPALESE</h2>
+          <span>Student Association</span>
         </div>
 
-        {/* JOB LIST */}
-        <div className="lg:col-span-2 space-y-5">
-          <div className="bg-white rounded-2xl shadow p-5 flex justify-between items-center">
-            <h2 className="text-2xl font-bold">All Jobs</h2>
+        <div className="jobs-menu">
+          <button onClick={() => navigate("/home")}>🏠 Home</button>
+          <button className="active">💼 Jobs</button>
+          <button onClick={() => navigate("/events")}>📅 Events</button>
+          <button onClick={() => navigate("/notices")}>📢 Announcements</button>
+          <button>📖 Resources</button>
+          <button>ⓘ About Us</button>
+          <button>🔔</button>
+          <button>Hello, User ⌄</button>
+        </div>
+      </nav>
 
-            <span className="text-gray-500">
-              Showing {jobs.length} jobs
-            </span>
+      <section className="jobs-hero">
+        <h1>Jobs</h1>
+        <p>Find job opportunities and build your career.</p>
+        <span>Anyone can post a job. Everyone can find opportunities.</span>
+      </section>
+
+      <main className="jobs-layout">
+        <aside className="filter-card">
+          <h3>Search & Filter</h3>
+
+          <input placeholder="Search by job title, keyword..." />
+
+          <h4>Job Type</h4>
+          <label><input type="checkbox" defaultChecked /> All Types</label>
+          <label><input type="checkbox" /> Full-time</label>
+          <label><input type="checkbox" /> Part-time</label>
+          <label><input type="checkbox" /> Freelance</label>
+          <label><input type="checkbox" /> Internship</label>
+          <label><input type="checkbox" /> Volunteer</label>
+
+          <h4>Location</h4>
+          <select>
+            <option>All Locations</option>
+            <option>Naju</option>
+            <option>Seoul</option>
+            <option>Busan</option>
+            <option>Online</option>
+          </select>
+
+          <h4>Category</h4>
+          <select>
+            <option>All Categories</option>
+            <option>Restaurant</option>
+            <option>Store</option>
+            <option>Education</option>
+            <option>Delivery</option>
+          </select>
+
+          <h4>Sort By</h4>
+          <select>
+            <option>Newest First</option>
+            <option>Oldest First</option>
+          </select>
+
+          <button className="search-btn">🔍 Search Jobs</button>
+        </aside>
+
+        <section className="job-list-card">
+          <div className="job-list-header">
+            <h3>All Jobs</h3>
+            <span>Showing {jobs.length} of {jobs.length} jobs</span>
           </div>
 
           {jobs.map((job, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow p-6 flex flex-col md:flex-row justify-between gap-6"
-            >
-              <div>
-                <h3 className="text-2xl font-bold">{job.title}</h3>
+            <div className="job-row" key={index}>
+              <div className="job-icon">{job.icon}</div>
 
-                <p className="text-blue-600 font-medium mt-1">
-                  {job.company}
-                </p>
-
-                <p className="text-gray-500 mt-2">
-                  📍 {job.location}
-                </p>
-
-                <p className="text-gray-600 mt-4">
-                  {job.description}
-                </p>
+              <div className="job-info">
+                <h3>{job.title}</h3>
+                <h4>{job.company}</h4>
+                <p>📍 {job.location} · Posted {job.date} · By: {job.author}</p>
+                <p>{job.desc}</p>
               </div>
 
-              <div className="flex flex-col justify-between items-end">
-                <span className="bg-green-100 text-green-700 px-4 py-2 rounded-xl font-medium">
-                  {job.type}
-                </span>
-
-                <button className="mt-6 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition px-5 py-2 rounded-xl">
-                  View Details
-                </button>
+              <div className="job-action">
+                <span>{job.type}</span>
+                <button>View Details</button>
               </div>
             </div>
           ))}
-        </div>
 
-        {/* POST JOB */}
-        <div className="bg-white rounded-2xl shadow p-6 h-fit">
-          <h2 className="text-2xl font-bold mb-6">Post a Job</h2>
-
-          <div className="space-y-4">
-            <input
-              type="text"
-              placeholder="Job Title"
-              className="w-full border rounded-xl px-4 py-3"
-            />
-
-            <input
-              type="text"
-              placeholder="Company / Organization"
-              className="w-full border rounded-xl px-4 py-3"
-            />
-
-            <input
-              type="text"
-              placeholder="Location"
-              className="w-full border rounded-xl px-4 py-3"
-            />
-
-            <select className="w-full border rounded-xl px-4 py-3">
-              <option>Select job type</option>
-              <option>Full-time</option>
-              <option>Part-time</option>
-              <option>Freelance</option>
-            </select>
-
-            <textarea
-              rows="5"
-              placeholder="Job description"
-              className="w-full border rounded-xl px-4 py-3"
-            ></textarea>
-
-            <input
-              type="text"
-              placeholder="Contact Email / Phone"
-              className="w-full border rounded-xl px-4 py-3"
-            />
-
-            <button className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold">
-              Post Job
-            </button>
+          <div className="pagination">
+            <button>‹</button>
+            <button className="current">1</button>
+            <button>›</button>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <aside className="post-job-card">
+          <h3>Post a Job</h3>
+          <p>Both users and admins can post jobs.</p>
+
+          <label>Job Title *</label>
+          <input placeholder="Enter job title" />
+
+          <label>Company / Organization *</label>
+          <input placeholder="Enter company name" />
+
+          <label>Location *</label>
+          <input placeholder="Enter location" />
+
+          <label>Job Type *</label>
+          <select>
+            <option>Select job type</option>
+            <option>Part-time</option>
+            <option>Full-time</option>
+            <option>Freelance</option>
+          </select>
+
+          <label>Category</label>
+          <select>
+            <option>Select category</option>
+            <option>Restaurant</option>
+            <option>Store</option>
+            <option>Education</option>
+          </select>
+
+          <label>Description *</label>
+          <textarea placeholder="Enter job description"></textarea>
+
+          <label>Contact Email / Phone *</label>
+          <input placeholder="Enter email or phone" />
+
+          <label>Application Deadline</label>
+          <input type="date" />
+
+          <button>Post Job</button>
+          <small>By posting, you agree to our community guidelines.</small>
+        </aside>
+      </main>
     </div>
   );
 }
+
+export default Jobs;
