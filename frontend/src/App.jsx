@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Notices from "./pages/Notices";
 import About from "./pages/About";
 import Events from "./pages/Events";
+ import Surveys from "./pages/Surveys";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/notices" element={<Notices />} />
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/surveys" element={<Surveys />} />
       </Routes>
     </BrowserRouter>
   );

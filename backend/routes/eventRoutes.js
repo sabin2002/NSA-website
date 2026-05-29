@@ -7,10 +7,9 @@ const {
   verifyAdmin,
 } = require("../middleware/authMiddleware");
 
-// Admin only
 router.post("/", verifyToken, verifyAdmin, eventController.createEvent);
-
-// Public / student view
 router.get("/", eventController.getEvents);
+router.put("/:id", verifyToken, verifyAdmin, eventController.updateEvent);
+router.delete("/:id", verifyToken, verifyAdmin, eventController.deleteEvent);
 
 module.exports = router;

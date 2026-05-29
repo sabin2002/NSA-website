@@ -9,5 +9,7 @@ const {
 
 router.post("/", verifyToken, verifyAdmin, noticeController.createNotice);
 router.get("/", noticeController.getNotices);
+router.put("/:id", verifyToken, verifyAdmin, noticeController.updateNotice);
+router.delete("/:id", verifyToken, verifyAdmin, noticeController.deleteNotice);
 
 module.exports = router;

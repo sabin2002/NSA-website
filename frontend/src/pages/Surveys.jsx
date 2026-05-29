@@ -1,190 +1,159 @@
-function Surveys() {
-  return <h1>Surveys Page RAMUNA</h1>;
-}
-
-export default Surveys;import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
+  FaHome,
+  FaBriefcase,
+  FaCalendarAlt,
+  FaBullhorn,
   FaPoll,
-  FaCheckCircle,
-  FaUsers,
-  FaClipboardList,
-  FaChartBar,
-  FaClock,
+  FaInfoCircle,
+  FaPlus,
+  FaPaperPlane,
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaEnvelope,
 } from "react-icons/fa";
+import "./Surveys.css";
 
 function Surveys() {
+  const navigate = useNavigate();
+
   const surveys = [
     {
       title: "Student Satisfaction Survey",
-      category: "Feedback",
-      icon: <FaUsers />,
-      color: "bg-blue-100 text-blue-600",
-      description:
-        "Share your experience and help improve student services.",
-      deadline: "Deadline: May 30, 2024",
+      description: "Share your feedback about NSA events and student support.",
+      deadline: "2026-06-30",
+      status: "Open",
+      responses: 45,
     },
     {
-      title: "Cultural Event Feedback",
-      category: "Event",
-      icon: <FaClipboardList />,
-      color: "bg-purple-100 text-purple-600",
-      description:
-        "Tell us your thoughts about the recent cultural night event.",
-      deadline: "Deadline: June 5, 2024",
+      title: "Sports Festival Feedback",
+      description: "Help us improve future sports activities.",
+      deadline: "2026-06-20",
+      status: "Open",
+      responses: 28,
     },
     {
-      title: "Campus Facility Survey",
-      category: "Facilities",
-      icon: <FaChartBar />,
-      color: "bg-green-100 text-green-600",
-      description:
-        "Help us improve library, cafeteria and study spaces.",
-      deadline: "Deadline: June 10, 2024",
-    },
-    {
-      title: "Scholarship Program Review",
-      category: "Scholarship",
-      icon: <FaCheckCircle />,
-      color: "bg-yellow-100 text-yellow-600",
-      description:
-        "Give feedback regarding scholarship opportunities and support.",
-      deadline: "Deadline: June 15, 2024",
+      title: "Job Support Survey",
+      description: "Tell us what kind of job information you need.",
+      deadline: "2026-07-05",
+      status: "Open",
+      responses: 16,
     },
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-
-      {/* HERO SECTION */}
-      <div className="bg-gradient-to-r from-red-900 to-red-700 text-white py-20 text-center">
-
-        <div className="flex justify-center mb-4 text-5xl">
-          <FaPoll />
+    <div className="surveys-page">
+      <nav className="surveys-nav">
+        <div className="surveys-logo" onClick={() => navigate("/home")}>
+          <h2>NEPALESE</h2>
+          <span>Student Association</span>
         </div>
 
-        <h1 className="text-5xl font-bold mb-4">
-          Student Surveys
-        </h1>
-
-        <p className="text-lg">
-          Participate in surveys and help improve the student community.
-        </p>
-
-      </div>
-
-      {/* MAIN SECTION */}
-      <div className="max-w-7xl mx-auto px-6 py-10">
-
-        {/* TOP INFO CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-
-          <div className="bg-white p-6 rounded-2xl shadow-md text-center">
-            <div className="text-4xl text-red-600 flex justify-center mb-3">
-              <FaClipboardList />
-            </div>
-
-            <h2 className="text-2xl font-bold">12+</h2>
-
-            <p className="text-gray-600">
-              Active Surveys
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl shadow-md text-center">
-            <div className="text-4xl text-green-600 flex justify-center mb-3">
-              <FaUsers />
-            </div>
-
-            <h2 className="text-2xl font-bold">500+</h2>
-
-            <p className="text-gray-600">
-              Student Responses
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl shadow-md text-center">
-            <div className="text-4xl text-blue-600 flex justify-center mb-3">
-              <FaClock />
-            </div>
-
-            <h2 className="text-2xl font-bold">24/7</h2>
-
-            <p className="text-gray-600">
-              Online Access
-            </p>
-          </div>
-
+        <div className="surveys-menu">
+          <button onClick={() => navigate("/home")}><FaHome /> Home</button>
+          <button onClick={() => navigate("/jobs")}><FaBriefcase /> Jobs</button>
+          <button onClick={() => navigate("/events")}><FaCalendarAlt /> Events</button>
+          <button onClick={() => navigate("/notices")}><FaBullhorn /> Announcements</button>
+          <button className="active"><FaPoll /> Surveys</button>
+          <button onClick={() => navigate("/about")}><FaInfoCircle /> About Us</button>
         </div>
+      </nav>
 
-        {/* SURVEY LIST */}
-        <div className="space-y-6">
+      <section className="surveys-hero">
+        <h1>Surveys</h1>
+        <div className="surveys-divider"></div>
+        <p>Participate in surveys and help NSA improve student services.</p>
+      </section>
+
+      <main className="surveys-layout">
+        <section className="surveys-list">
+          <div className="surveys-header">
+            <div>
+              <h2>Available Surveys</h2>
+              <p>Choose a survey and submit your response.</p>
+            </div>
+
+            <button className="create-survey-btn">
+              <FaPlus /> Create Survey
+            </button>
+          </div>
 
           {surveys.map((survey, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl shadow-md p-6 flex flex-col md:flex-row justify-between gap-6 hover:shadow-xl transition"
-            >
-
-              <div className="flex gap-5">
-
-                <div
-                  className={`w-16 h-16 rounded-xl flex items-center justify-center text-2xl ${survey.color}`}
-                >
-                  {survey.icon}
-                </div>
-
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">
-                    {survey.title}
-                  </h2>
-
-                  <span className="bg-gray-100 text-sm px-3 py-1 rounded-full">
-                    {survey.category}
-                  </span>
-
-                  <p className="text-gray-600 mt-3">
-                    {survey.description}
-                  </p>
-
-                  <p className="text-red-600 mt-3 font-semibold">
-                    {survey.deadline}
-                  </p>
-                </div>
-
+            <div className="survey-card" key={index}>
+              <div className="survey-icon">
+                <FaPoll />
               </div>
 
-              <div className="flex items-center">
-                <button className="bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition">
-                  Participate
-                </button>
+              <div className="survey-info">
+                <h3>{survey.title}</h3>
+                <p>{survey.description}</p>
+
+                <div className="survey-meta">
+                  <span>Deadline: {survey.deadline}</span>
+                  <span>Responses: {survey.responses}</span>
+                  <span className="open-status">{survey.status}</span>
+                </div>
               </div>
 
+              <button className="submit-survey-btn">
+                <FaPaperPlane /> Submit
+              </button>
             </div>
           ))}
+        </section>
 
+        <aside className="survey-form-card">
+          <h2>Submit Survey Response</h2>
+
+          <label>Select Survey</label>
+          <select>
+            <option>Student Satisfaction Survey</option>
+            <option>Sports Festival Feedback</option>
+            <option>Job Support Survey</option>
+          </select>
+
+          <label>How satisfied are you?</label>
+          <select>
+            <option>Very Satisfied</option>
+            <option>Satisfied</option>
+            <option>Neutral</option>
+            <option>Unsatisfied</option>
+          </select>
+
+          <label>Your Feedback</label>
+          <textarea placeholder="Write your feedback here..."></textarea>
+
+          <button>Submit Response</button>
+        </aside>
+      </main>
+
+      <footer className="surveys-footer">
+        <div>
+          <h3>Nepalese Student Association (NSA)</h3>
+          <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
         </div>
 
-      </div>
-
-      {/* FOOTER */}
-      <footer className="bg-red-900 text-white py-8 mt-10">
-
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-3">
-            Nepalese Student Association
-          </h2>
-
-          <p className="mb-4">
-            Connecting Students in Korea 🇰🇷 🇳🇵
-          </p>
-
-          <p className="text-sm">
-            © 2024 NSA. All rights reserved.
-          </p>
+        <div>
+          <h3>Quick Links</h3>
+          <p>Home | Jobs | Events | Announcements | Surveys | About Us</p>
         </div>
 
+        <div>
+          <h3>Follow Us</h3>
+          <div className="footer-icons">
+            <FaFacebook />
+            <FaInstagram />
+            <FaYoutube />
+            <FaEnvelope />
+          </div>
+        </div>
+
+        <div>
+          <p>© 2026 Nepalese Student Association.</p>
+          <p>All rights reserved.</p>
+        </div>
       </footer>
-
     </div>
   );
 }

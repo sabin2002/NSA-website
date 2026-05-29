@@ -36,3 +36,38 @@ exports.getEvents = (req, res) => {
     res.status(200).json(result);
   });
 };
+
+// Update Event
+exports.updateEvent = (req, res) => {
+  const { id } = req.params;
+  const { title, description, event_date, event_time, location } = req.body;
+
+  const sql = `
+    UPDATE events
+    SET title = ?, description = ?, event_date = ?, event_time = ?, location = ?
+    WHERE event_id = ?
+  `;
+
+  db.query(sql, [title, description, event_date, event_time, location, id], (err) => {
+    if (err) {
+      return res.status(500).json({ message: "Failed to update event" });
+    }
+
+    res.status(200).json({ message: "Event updated successfully" });
+  });
+};
+
+// Delete Event
+exports.deleteEvent = (req, res) => {
+  const { id } = req.params;
+
+  const sql = "DELETE FROM events WHERE event_id = ?";
+
+  db.query(sql, [id], (err) => {
+    if (err) {
+      return res.status(500).json({ message: "Failed to delete event" });
+    }
+
+    res.status(200).json({ message: "Event deleted successfully" });
+  });
+};
