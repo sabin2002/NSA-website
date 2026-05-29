@@ -1,0 +1,265 @@
+.admin-dashboard {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background: #f3eee9;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-sidebar {
+  background: #8b1414;
+  color: white;
+  padding: 25px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-logo {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.dashboard-logo h2 {
+  font-size: 42px;
+  margin: 0;
+  color: #ffcc66;
+}
+
+.dashboard-logo p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.dashboard-sidebar button {
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 13px 16px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dashboard-sidebar button:hover {
+  background: #c73939;
+}
+
+.logout-btn {
+  margin-top: auto;
+  background: #c73939 !important;
+}
+
+.dashboard-main {
+  padding: 30px;
+}
+
+.dashboard-header {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #13213a;
+}
+
+.dashboard-header p {
+  color: #666;
+  margin: 8px 0 0;
+}
+
+.admin-profile {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.admin-profile span {
+  display: block;
+  color: #b51f1f;
+  font-size: 14px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  background: #f1dede;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin: 25px 0;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+}
+
+.stat-card svg {
+  font-size: 38px;
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.stat-card p {
+  margin: 4px 0 0;
+  color: #555;
+}
+
+.stat-card.red svg { color: #c52d2d; }
+.stat-card.blue svg { color: #1f5bbd; }
+.stat-card.green svg { color: #238b45; }
+.stat-card.purple svg { color: #6b3bbd; }
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+}
+
+.management-card,
+.activity-card,
+.table-section {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+}
+
+.management-card h2,
+.activity-card h2,
+.table-section h2 {
+  margin-top: 0;
+  color: #8b1414;
+}
+
+.management-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.management-grid button {
+  background: #fff4f4;
+  border: 1px solid #e4b6b6;
+  color: #8b1414;
+  padding: 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.management-grid button:hover {
+  background: #8b1414;
+  color: white;
+}
+
+.activity-item {
+  display: flex;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.activity-item span {
+  font-size: 25px;
+}
+
+.activity-item h4 {
+  margin: 0;
+}
+
+.activity-item p {
+  margin: 6px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.table-section {
+  margin-top: 25px;
+}
+
+.table-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-section th,
+.table-section td {
+  padding: 14px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.table-section th {
+  background: #f6eeee;
+  color: #8b1414;
+}
+
+.status {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.status.progress {
+  background: #fff0d8;
+  color: #b66a00;
+}
+
+.status.pending {
+  background: #e8e8e8;
+  color: #555;
+}
+
+@media (max-width: 1000px) {
+  .admin-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .stats-grid,
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .management-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -6,4 +6,10 @@ Created frontend Home Page
 
 2026-05-29
 Completed Tasks
-Update on Frontend UI
+### Completed
+- Created Events page
+- Created Notices page
+- Created About page
+- Created Admin Dashboard
+- Updated navigation structure
+- Removed Resources page
