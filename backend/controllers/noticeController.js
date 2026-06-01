@@ -39,7 +39,7 @@ exports.updateNotice = (req, res) => {
   const sql = `
     UPDATE notices
     SET title = ?, content = ?
-    WHERE notice_id = ?
+    WHERE id = ?
   `;
 
   db.query(sql, [title, content, id], (err) => {
@@ -55,7 +55,7 @@ exports.updateNotice = (req, res) => {
 exports.deleteNotice = (req, res) => {
   const { id } = req.params;
 
-  const sql = "DELETE FROM notices WHERE notice_id = ?";
+  const sql = "DELETE FROM notices WHERE id = ?";
 
   db.query(sql, [id], (err) => {
     if (err) {
