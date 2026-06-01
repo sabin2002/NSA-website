@@ -8,7 +8,9 @@ import Home from "./pages/Home";
 import Notices from "./pages/Notices";
 import About from "./pages/About";
 import Events from "./pages/Events";
- import Surveys from "./pages/Surveys";
+import Surveys from "./pages/Surveys";
+import AdminEvents from "./pages/AdminEvents";
+import AdminNotices from "./pages/AdminNotices";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/surveys" element={<Surveys />} />
+        <Route path="/admin/events" element={<AdminEvents />} />
+        <Route path="/admin/notices" element={<AdminNotices />} />
       </Routes>
     </BrowserRouter>
   );

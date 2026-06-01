@@ -19,17 +19,21 @@ exports.createEvent = (req, res) => {
         return res.status(500).json({ message: "Failed to create event" });
       }
 
-      res.status(201).json({ message: "Event created successfully" });
+      res.status(201).json({
+        message: "Event created successfully",
+        event_id: result.insertId,
+      });
     }
   );
 };
 
-// Get All Events
+// Get Events
 exports.getEvents = (req, res) => {
   const sql = "SELECT * FROM events ORDER BY event_date ASC";
 
   db.query(sql, (err, result) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({ message: "Failed to fetch events" });
     }
 
@@ -48,13 +52,22 @@ exports.updateEvent = (req, res) => {
     WHERE event_id = ?
   `;
 
-  db.query(sql, [title, description, event_date, event_time, location, id], (err) => {
-    if (err) {
-      return res.status(500).json({ message: "Failed to update event" });
-    }
+  db.query(
+    sql,
+    [title, description, event_date, event_time, location, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Failed to update event" });
+      }
 
-    res.status(200).json({ message: "Event updated successfully" });
-  });
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+
+      res.status(200).json({ message: "Event updated successfully" });
+    }
+  );
 };
 
 // Delete Event
@@ -63,9 +76,14 @@ exports.deleteEvent = (req, res) => {
 
   const sql = "DELETE FROM events WHERE event_id = ?";
 
-  db.query(sql, [id], (err) => {
+  db.query(sql, [id], (err, result) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({ message: "Failed to delete event" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Event not found" });
     }
 
     res.status(200).json({ message: "Event deleted successfully" });

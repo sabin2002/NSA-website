@@ -36,12 +36,14 @@ function Dashboard() {
         <button onClick={() => navigate("/home")}>
           <FaHome /> Home
         </button>
-        <button>
-          <FaCalendarAlt /> Events
-        </button>
-        <button>
-          <FaBullhorn /> Notices
-        </button>
+        
+       <button onClick={() => navigate("/admin/events")}>
+  Create Event
+</button>
+
+<button onClick={() => navigate("/admin/notices")}>
+  Post Notice
+</button>
         <button>
           <FaBriefcase /> Jobs
         </button>

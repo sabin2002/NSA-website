@@ -1,0 +1,127 @@
+.admin-events-page {
+  min-height: 100vh;
+  background: #f3eee9;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-events-header {
+  background: #8b1414;
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.admin-events-header h1 {
+  margin: 0;
+}
+
+.admin-events-header p {
+  margin: 8px 0 0;
+}
+
+.admin-events-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 25px;
+}
+
+.event-form-card,
+.events-table-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.event-form-card h2,
+.events-table-card h2 {
+  color: #8b1414;
+  margin-top: 0;
+}
+
+.event-form-card label {
+  display: block;
+  margin-top: 14px;
+  font-weight: bold;
+}
+
+.event-form-card input,
+.event-form-card textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 7px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+
+.event-form-card textarea {
+  min-height: 100px;
+}
+
+.save-btn {
+  width: 100%;
+  margin-top: 20px;
+  background: #b51f1f;
+  color: white;
+  border: none;
+  padding: 13px;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+.cancel-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: #777;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 7px;
+}
+
+.events-table-card {
+  overflow-x: auto;
+}
+
+.events-table-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.events-table-card th,
+.events-table-card td {
+  padding: 13px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.events-table-card th {
+  background: #f6eeee;
+  color: #8b1414;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-right: 8px;
+  color: white;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background: #1f5bbd;
+}
+
+.delete-btn {
+  background: #c52d2d;
+}
+
+@media (max-width: 950px) {
+  .admin-events-layout {
+    grid-template-columns: 1fr;
+  }
+}
