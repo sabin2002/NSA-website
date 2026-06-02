@@ -1,95 +1,119 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api/axios";
 import "./Jobs.css";
 
 function Jobs() {
   const navigate = useNavigate();
 
-  const [jobs] = useState([
-    {
-      title: "Convenience Store Staff",
-      company: "Naju Mart",
-      location: "Naju, Korea",
-      type: "Part-time",
-      author: "John Doe",
-      date: "April 10, 2026",
-      icon: "🛒",
-      desc: "Assist with store operations, customer service, stocking shelves, and maintaining cleanliness.",
-    },
-    {
-      title: "Restaurant Kitchen Helper",
-      company: "Himalayan Kitchen",
-      location: "Seoul, Korea",
-      type: "Part-time",
-      author: "Admin",
-      date: "April 8, 2026",
-      icon: "🍴",
-      desc: "Support kitchen staff in food preparation, cleaning, and maintaining kitchen hygiene.",
-    },
-    {
-      title: "Tutor (Nepali/English)",
-      company: "Self-employed",
-      location: "Online",
-      type: "Freelance",
-      author: "Sita Gurung",
-      date: "April 5, 2026",
-      icon: "🎓",
-      desc: "Teach Nepali or English language to students of different age groups online.",
-    },
-    {
-      title: "Delivery Driver",
-      company: "Quick Delivery",
-      location: "Busan, Korea",
-      type: "Part-time",
-      author: "Prakash Rai",
-      date: "April 3, 2026",
-      icon: "🚚",
-      desc: "Deliver packages and goods to customers safely and on time.",
-    },
-  ]);
+  const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState("");
+  const [jobType, setJobType] = useState("All Types");
+  const [location, setLocation] = useState("All Locations");
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const fetchJobs = async () => {
+    try {
+      const res = await API.get("/jobs");
+      setJobs(res.data);
+    } catch (error) {
+      alert("Failed to fetch jobs");
+    }
+  };
+
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch = `${job.title} ${job.company} ${job.location} ${job.description}`
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesType =
+      jobType === "All Types" || job.job_type === jobType;
+
+    const matchesLocation =
+      location === "All Locations" ||
+      job.location?.toLowerCase().includes(location.toLowerCase());
+
+    return matchesSearch && matchesType && matchesLocation;
+  });
+
+  const formatDate = (date) => {
+    if (!date) return "N/A";
+    return new Date(date).toLocaleDateString();
+  };
 
   return (
     <div className="jobs-page">
-      <nav className="jobs-nav">
-        <div className="jobs-logo">
-          <h2>NEPALESE</h2>
-          <span>Student Association</span>
-        </div>
-
-        <div className="jobs-menu">
-          <button onClick={() => navigate("/home")}>🏠 Home</button>
-          <button className="active">💼 Jobs</button>
-          <button onClick={() => navigate("/events")}>📅 Events</button>
-          <button onClick={() => navigate("/notices")}>📢 Announcements</button>
-          <button>📖 Resources</button>
-          <button>ⓘ About Us</button>
-          <button>🔔</button>
-          <button>Hello, User ⌄</button>
-        </div>
-      </nav>
-
       <section className="jobs-hero">
         <h1>Jobs</h1>
         <p>Find job opportunities and build your career.</p>
-        <span>Anyone can post a job. Everyone can find opportunities.</span>
+        <span>Browse latest job opportunities shared by NSA admins.</span>
       </section>
 
       <main className="jobs-layout">
         <aside className="filter-card">
           <h3>Search & Filter</h3>
 
-          <input placeholder="Search by job title, keyword..." />
+          <input
+            placeholder="Search by job title, keyword..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
           <h4>Job Type</h4>
-          <label><input type="checkbox" defaultChecked /> All Types</label>
-          <label><input type="checkbox" /> Full-time</label>
-          <label><input type="checkbox" /> Part-time</label>
-          <label><input type="checkbox" /> Freelance</label>
-          <label><input type="checkbox" /> Internship</label>
-          <label><input type="checkbox" /> Volunteer</label>
+          <label>
+            <input
+              type="radio"
+              checked={jobType === "All Types"}
+              onChange={() => setJobType("All Types")}
+            />{" "}
+            All Types
+          </label>
+          <label>
+            <input
+              type="radio"
+              checked={jobType === "Full-time"}
+              onChange={() => setJobType("Full-time")}
+            />{" "}
+            Full-time
+          </label>
+          <label>
+            <input
+              type="radio"
+              checked={jobType === "Part-time"}
+              onChange={() => setJobType("Part-time")}
+            />{" "}
+            Part-time
+          </label>
+          <label>
+            <input
+              type="radio"
+              checked={jobType === "Freelance"}
+              onChange={() => setJobType("Freelance")}
+            />{" "}
+            Freelance
+          </label>
+          <label>
+            <input
+              type="radio"
+              checked={jobType === "Internship"}
+              onChange={() => setJobType("Internship")}
+            />{" "}
+            Internship
+          </label>
+          <label>
+            <input
+              type="radio"
+              checked={jobType === "Volunteer"}
+              onChange={() => setJobType("Volunteer")}
+            />{" "}
+            Volunteer
+          </label>
 
           <h4>Location</h4>
-          <select>
+          <select value={location} onChange={(e) => setLocation(e.target.value)}>
             <option>All Locations</option>
             <option>Naju</option>
             <option>Seoul</option>
@@ -97,47 +121,56 @@ function Jobs() {
             <option>Online</option>
           </select>
 
-          <h4>Category</h4>
-          <select>
-            <option>All Categories</option>
-            <option>Restaurant</option>
-            <option>Store</option>
-            <option>Education</option>
-            <option>Delivery</option>
-          </select>
-
-          <h4>Sort By</h4>
-          <select>
-            <option>Newest First</option>
-            <option>Oldest First</option>
-          </select>
-
-          <button className="search-btn">🔍 Search Jobs</button>
+          <button
+            className="search-btn"
+            onClick={() => {
+              setSearch("");
+              setJobType("All Types");
+              setLocation("All Locations");
+            }}
+          >
+            Reset Filters
+          </button>
         </aside>
 
         <section className="job-list-card">
           <div className="job-list-header">
             <h3>All Jobs</h3>
-            <span>Showing {jobs.length} of {jobs.length} jobs</span>
+            <span>
+              Showing {filteredJobs.length} of {jobs.length} jobs
+            </span>
           </div>
 
-          {jobs.map((job, index) => (
-            <div className="job-row" key={index}>
-              <div className="job-icon">{job.icon}</div>
+          {filteredJobs.length === 0 ? (
+            <p>No jobs found.</p>
+          ) : (
+            filteredJobs.map((job) => (
+              <div className="job-row" key={job.job_id}>
+                <div className="job-icon">💼</div>
 
-              <div className="job-info">
-                <h3>{job.title}</h3>
-                <h4>{job.company}</h4>
-                <p>📍 {job.location} · Posted {job.date} · By: {job.author}</p>
-                <p>{job.desc}</p>
-              </div>
+                <div className="job-info">
+                  <h3>{job.title}</h3>
+                  <h4>{job.company || "Company TBA"}</h4>
+                  <p>
+                    📍 {job.location || "Location TBA"} · Posted{" "}
+                    {formatDate(job.created_at)}
+                  </p>
+                  <p>{job.description}</p>
+                  <p>
+                    <strong>Contact:</strong> {job.contact_info || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Deadline:</strong> {formatDate(job.deadline)}
+                  </p>
+                </div>
 
-              <div className="job-action">
-                <span>{job.type}</span>
-                <button>View Details</button>
+                <div className="job-action">
+                  <span>{job.job_type || "Job"}</span>
+                  <button>View Details</button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
 
           <div className="pagination">
             <button>‹</button>
@@ -147,45 +180,19 @@ function Jobs() {
         </section>
 
         <aside className="post-job-card">
-          <h3>Post a Job</h3>
-          <p>Both users and admins can post jobs.</p>
+          <h3>Want to post a job?</h3>
+          <p>
+            Job posts are managed by NSA administrators to keep information
+            reliable and safe for students.
+          </p>
 
-          <label>Job Title *</label>
-          <input placeholder="Enter job title" />
+          <button onClick={() => navigate("/admin/jobs")}>
+            Admin Job Management
+          </button>
 
-          <label>Company / Organization *</label>
-          <input placeholder="Enter company name" />
-
-          <label>Location *</label>
-          <input placeholder="Enter location" />
-
-          <label>Job Type *</label>
-          <select>
-            <option>Select job type</option>
-            <option>Part-time</option>
-            <option>Full-time</option>
-            <option>Freelance</option>
-          </select>
-
-          <label>Category</label>
-          <select>
-            <option>Select category</option>
-            <option>Restaurant</option>
-            <option>Store</option>
-            <option>Education</option>
-          </select>
-
-          <label>Description *</label>
-          <textarea placeholder="Enter job description"></textarea>
-
-          <label>Contact Email / Phone *</label>
-          <input placeholder="Enter email or phone" />
-
-          <label>Application Deadline</label>
-          <input type="date" />
-
-          <button>Post Job</button>
-          <small>By posting, you agree to our community guidelines.</small>
+          <small>
+            Please contact NSA admins if you want to share a job opportunity.
+          </small>
         </aside>
       </main>
     </div>

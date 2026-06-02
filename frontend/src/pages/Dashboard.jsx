@@ -10,6 +10,17 @@ import {
   FaSignOutAlt,
   FaHome,
 } from "react-icons/fa";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
 import API from "../api/axios";
 import "./Dashboard.css";
 
@@ -24,23 +35,58 @@ function Dashboard() {
     surveys: 0,
   });
 
+  const [budget, setBudget] = useState([]);
+
   const user = JSON.parse(localStorage.getItem("user")) || {
     name: "Admin",
     role: "Admin",
   };
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await API.get("/dashboard/stats");
-        setStats(res.data);
-      } catch (error) {
-        console.log("Failed to fetch dashboard stats", error);
-      }
-    };
-
     fetchStats();
+    fetchBudget();
   }, []);
+
+  const fetchStats = async () => {
+    try {
+      const res = await API.get("/dashboard/stats");
+      setStats(res.data);
+    } catch (error) {
+      console.log("Failed to fetch dashboard stats", error);
+    }
+  };
+
+  const fetchBudget = async () => {
+    try {
+      const res = await API.get("/budget");
+      setBudget(res.data);
+    } catch (error) {
+      console.log("Failed to fetch budget", error);
+    }
+  };
+
+  const totalIncome = budget
+    .filter((item) => item.type === "income")
+    .reduce((sum, item) => sum + Number(item.amount), 0);
+
+  const totalExpense = budget
+    .filter((item) => item.type === "expense")
+    .reduce((sum, item) => sum + Number(item.amount), 0);
+
+  const chartData = [
+    { name: "Users", value: stats.users },
+    { name: "Events", value: stats.events },
+    { name: "Notices", value: stats.notices },
+    { name: "Jobs", value: stats.jobs },
+    { name: "Surveys", value: stats.surveys },
+  ];
+
+  const budgetData = [
+    { name: "Income", value: totalIncome },
+    { name: "Expense", value: totalExpense },
+  ];
+
+  const COLORS = ["#1f5bbd", "#c52d2d"];
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -147,6 +193,48 @@ function Dashboard() {
           </div>
         </section>
 
+        <section className="charts-section">
+          <div className="chart-card">
+            <h2>System Overview</h2>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <XAxis dataKey="name" />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Bar dataKey="value" fill="#8b1414" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="chart-card">
+            <h2>Budget Summary</h2>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={budgetData}
+                  dataKey="value"
+                  nameKey="name"
+                  outerRadius={100}
+                  label
+                >
+                  {budgetData.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+
+            <div className="budget-chart-summary">
+              <p>Income: ₩ {totalIncome.toLocaleString()}</p>
+              <p>Expense: ₩ {totalExpense.toLocaleString()}</p>
+              <p>Balance: ₩ {(totalIncome - totalExpense).toLocaleString()}</p>
+            </div>
+          </div>
+        </section>
+
         <section className="dashboard-content">
           <div className="management-card">
             <h2>Quick Management</h2>
@@ -195,8 +283,8 @@ function Dashboard() {
             <div className="activity-item">
               <span>🚀</span>
               <div>
-                <h4>Dashboard Statistics Active</h4>
-                <p>Dashboard now displays live counts from the database.</p>
+                <h4>Dashboard Charts Active</h4>
+                <p>Dashboard now displays live charts using Recharts.</p>
               </div>
             </div>
           </div>
@@ -218,7 +306,7 @@ function Dashboard() {
             <tbody>
               <tr>
                 <td>Events</td>
-                <td>Create, view, update, and delete events</td>
+                <td>Create, view, update, delete, and register participants</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
@@ -236,7 +324,7 @@ function Dashboard() {
               </tr>
               <tr>
                 <td>Surveys</td>
-                <td>Create and manage student feedback surveys</td>
+                <td>Create surveys and view survey responses</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
@@ -245,6 +333,12 @@ function Dashboard() {
                 <td>View users, change roles, and delete accounts</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
+              </tr>
+              <tr>
+                <td>Budget</td>
+                <td>Manage income, expenses, and balance</td>
+                <td><span className="status progress">Completed</span></td>
+                <td>Medium</td>
               </tr>
             </tbody>
           </table>

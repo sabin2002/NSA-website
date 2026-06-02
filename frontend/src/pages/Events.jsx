@@ -92,36 +92,7 @@ function Events() {
 
   return (
     <div className="events-page">
-      <nav className="events-nav">
-        <div className="events-logo" onClick={() => navigate("/home")}>
-          <h2>NEPALESE</h2>
-          <span>Student Association</span>
-        </div>
-
-        <div className="events-menu">
-          <button onClick={() => navigate("/home")}>
-            <FaHome /> Home
-          </button>
-          <button onClick={() => navigate("/jobs")}>
-            <FaBriefcase /> Jobs
-          </button>
-          <button className="active">
-            <FaCalendarAlt /> Events
-          </button>
-          <button onClick={() => navigate("/notices")}>
-            <FaBullhorn /> Announcements
-          </button>
-          <button>
-            <FaBookOpen /> Resources
-          </button>
-          <button onClick={() => navigate("/about")}>
-            <FaInfoCircle /> About Us
-          </button>
-          <button onClick={() => navigate("/")}>Login</button>
-          <button onClick={() => navigate("/register")}>Register</button>
-        </div>
-      </nav>
-
+    
       <section className="events-hero">
         <h1>Events</h1>
         <div className="events-divider"></div>
@@ -288,33 +259,6 @@ function Events() {
           </div>
         </aside>
       </main>
-
-      <footer className="events-footer">
-        <div>
-          <h3>Nepalese Student Association (NSA)</h3>
-          <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
-        </div>
-
-        <div>
-          <h3>Quick Links</h3>
-          <p>Home | Jobs | Events | Announcements | Resources | About Us</p>
-        </div>
-
-        <div>
-          <h3>Follow Us</h3>
-          <div className="footer-icons">
-            <FaFacebook />
-            <FaInstagram />
-            <FaYoutube />
-            <FaEnvelope />
-          </div>
-        </div>
-
-        <div>
-          <p>© 2026 Nepalese Student Association.</p>
-          <p>All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }

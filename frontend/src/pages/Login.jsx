@@ -17,11 +17,18 @@ function Login() {
         password,
       });
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      const { token, user } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       alert("Login successful");
-      navigate("/dashboard");
+
+      if (user.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/home");
+      }
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
     }
@@ -31,7 +38,11 @@ function Login() {
     <div className="container mt-5">
       <h2>NSA Website Login</h2>
 
-      <form onSubmit={handleLogin} className="mt-4" style={{ maxWidth: "400px" }}>
+      <form
+        onSubmit={handleLogin}
+        className="mt-4"
+        style={{ maxWidth: "400px" }}
+      >
         <div className="mb-3">
           <label>Email</label>
           <input
@@ -57,13 +68,12 @@ function Login() {
         </div>
 
         <button className="btn btn-primary w-100">Login</button>
+
         <p className="mt-3">
-  Don't have an account? <a href="/register">Register here</a>
-</p>
+          Don't have an account? <a href="/register">Register here</a>
+        </p>
       </form>
     </div>
-
-    
   );
 }
 

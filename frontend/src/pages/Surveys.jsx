@@ -1,65 +1,87 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  FaHome,
-  FaBriefcase,
-  FaCalendarAlt,
-  FaBullhorn,
   FaPoll,
-  FaInfoCircle,
-  FaPlus,
   FaPaperPlane,
   FaFacebook,
   FaInstagram,
   FaYoutube,
   FaEnvelope,
 } from "react-icons/fa";
+import API from "../api/axios";
 import "./Surveys.css";
 
 function Surveys() {
   const navigate = useNavigate();
 
-  const surveys = [
-    {
-      title: "Student Satisfaction Survey",
-      description: "Share your feedback about NSA events and student support.",
-      deadline: "2026-06-30",
-      status: "Open",
-      responses: 45,
-    },
-    {
-      title: "Sports Festival Feedback",
-      description: "Help us improve future sports activities.",
-      deadline: "2026-06-20",
-      status: "Open",
-      responses: 28,
-    },
-    {
-      title: "Job Support Survey",
-      description: "Tell us what kind of job information you need.",
-      deadline: "2026-07-05",
-      status: "Open",
-      responses: 16,
-    },
-  ];
+  const [surveys, setSurveys] = useState([]);
+  const [selectedSurveyId, setSelectedSurveyId] = useState("");
+  const [responseText, setResponseText] = useState("");
+
+  useEffect(() => {
+    fetchSurveys();
+  }, []);
+
+  const fetchSurveys = async () => {
+    try {
+      const res = await API.get("/surveys");
+      setSurveys(res.data);
+
+      if (res.data.length > 0) {
+        setSelectedSurveyId(res.data[0].survey_id);
+      }
+    } catch (error) {
+      alert("Failed to fetch surveys");
+    }
+  };
+
+  const formatDate = (date) => {
+    if (!date) return "No deadline";
+    return new Date(date).toLocaleDateString();
+  };
+
+  const submitSurveyResponse = async (surveyId = selectedSurveyId) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login before submitting a survey.");
+      navigate("/");
+      return;
+    }
+
+    if (!surveyId) {
+      alert("Please select a survey.");
+      return;
+    }
+
+    if (!responseText.trim()) {
+      alert("Please write your response.");
+      return;
+    }
+
+    try {
+      await API.post(
+        "/survey-responses",
+        {
+          survey_id: surveyId,
+          response_text: responseText,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Survey response submitted successfully");
+      setResponseText("");
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to submit response");
+    }
+  };
 
   return (
     <div className="surveys-page">
-      <nav className="surveys-nav">
-        <div className="surveys-logo" onClick={() => navigate("/home")}>
-          <h2>NEPALESE</h2>
-          <span>Student Association</span>
-        </div>
-
-        <div className="surveys-menu">
-          <button onClick={() => navigate("/home")}><FaHome /> Home</button>
-          <button onClick={() => navigate("/jobs")}><FaBriefcase /> Jobs</button>
-          <button onClick={() => navigate("/events")}><FaCalendarAlt /> Events</button>
-          <button onClick={() => navigate("/notices")}><FaBullhorn /> Announcements</button>
-          <button className="active"><FaPoll /> Surveys</button>
-          <button onClick={() => navigate("/about")}><FaInfoCircle /> About Us</button>
-        </div>
-      </nav>
-
       <section className="surveys-hero">
         <h1>Surveys</h1>
         <div className="surveys-divider"></div>
@@ -73,87 +95,69 @@ function Surveys() {
               <h2>Available Surveys</h2>
               <p>Choose a survey and submit your response.</p>
             </div>
-
-            <button className="create-survey-btn">
-              <FaPlus /> Create Survey
-            </button>
           </div>
 
-          {surveys.map((survey, index) => (
-            <div className="survey-card" key={index}>
-              <div className="survey-icon">
-                <FaPoll />
-              </div>
-
-              <div className="survey-info">
-                <h3>{survey.title}</h3>
-                <p>{survey.description}</p>
-
-                <div className="survey-meta">
-                  <span>Deadline: {survey.deadline}</span>
-                  <span>Responses: {survey.responses}</span>
-                  <span className="open-status">{survey.status}</span>
+          {surveys.length === 0 ? (
+            <p>No surveys available.</p>
+          ) : (
+            surveys.map((survey) => (
+              <div className="survey-card" key={survey.survey_id}>
+                <div className="survey-icon">
+                  <FaPoll />
                 </div>
-              </div>
 
-              <button className="submit-survey-btn">
-                <FaPaperPlane /> Submit
-              </button>
-            </div>
-          ))}
+                <div className="survey-info">
+                  <h3>{survey.title}</h3>
+                  <p>{survey.description}</p>
+
+                  <div className="survey-meta">
+                    <span>Deadline: {formatDate(survey.deadline)}</span>
+                    <span className="open-status">Open</span>
+                  </div>
+                </div>
+
+                <button
+                  className="submit-survey-btn"
+                  onClick={() => {
+                    setSelectedSurveyId(survey.survey_id);
+                    window.scrollTo({ top: 250, behavior: "smooth" });
+                  }}
+                >
+                  <FaPaperPlane /> Select
+                </button>
+              </div>
+            ))
+          )}
         </section>
 
         <aside className="survey-form-card">
           <h2>Submit Survey Response</h2>
 
           <label>Select Survey</label>
-          <select>
-            <option>Student Satisfaction Survey</option>
-            <option>Sports Festival Feedback</option>
-            <option>Job Support Survey</option>
-          </select>
-
-          <label>How satisfied are you?</label>
-          <select>
-            <option>Very Satisfied</option>
-            <option>Satisfied</option>
-            <option>Neutral</option>
-            <option>Unsatisfied</option>
+          <select
+            value={selectedSurveyId}
+            onChange={(e) => setSelectedSurveyId(e.target.value)}
+          >
+            {surveys.map((survey) => (
+              <option key={survey.survey_id} value={survey.survey_id}>
+                {survey.title}
+              </option>
+            ))}
           </select>
 
           <label>Your Feedback</label>
-          <textarea placeholder="Write your feedback here..."></textarea>
+          <textarea
+            placeholder="Write your feedback here..."
+            value={responseText}
+            onChange={(e) => setResponseText(e.target.value)}
+          ></textarea>
 
-          <button>Submit Response</button>
+          <button onClick={() => submitSurveyResponse()}>
+            Submit Response
+          </button>
         </aside>
       </main>
 
-      <footer className="surveys-footer">
-        <div>
-          <h3>Nepalese Student Association (NSA)</h3>
-          <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
-        </div>
-
-        <div>
-          <h3>Quick Links</h3>
-          <p>Home | Jobs | Events | Announcements | Surveys | About Us</p>
-        </div>
-
-        <div>
-          <h3>Follow Us</h3>
-          <div className="footer-icons">
-            <FaFacebook />
-            <FaInstagram />
-            <FaYoutube />
-            <FaEnvelope />
-          </div>
-        </div>
-
-        <div>
-          <p>© 2026 Nepalese Student Association.</p>
-          <p>All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
