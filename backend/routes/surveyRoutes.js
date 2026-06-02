@@ -9,8 +9,8 @@ const {
 } = require("../middleware/authMiddleware");
 
 router.post("/", verifyToken, verifyAdmin, surveyController.createSurvey);
-router.post("/question", verifyToken, verifyAdmin, surveyController.addQuestion);
 router.get("/", surveyController.getSurveys);
-router.post("/submit", verifyToken, surveyController.submitSurvey);
+router.put("/:id", verifyToken, verifyAdmin, surveyController.updateSurvey);
+router.delete("/:id", verifyToken, verifyAdmin, surveyController.deleteSurvey);
 
 module.exports = router;

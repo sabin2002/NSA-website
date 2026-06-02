@@ -1,0 +1,95 @@
+.admin-users-page {
+  min-height: 100vh;
+  background: #f3eee9;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-users-header {
+  background: #8b1414;
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.admin-users-header h1 {
+  margin: 0;
+}
+
+.admin-users-header p {
+  margin: 8px 0 0;
+}
+
+.users-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+.users-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  gap: 20px;
+}
+
+.users-topbar h2 {
+  color: #8b1414;
+  margin: 0;
+}
+
+.users-topbar input {
+  width: 380px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+
+.users-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-card th,
+.users-card td {
+  padding: 13px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.users-card th {
+  background: #f6eeee;
+  color: #8b1414;
+}
+
+.users-card select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.delete-btn {
+  background: #c52d2d;
+  color: white;
+  border: none;
+  padding: 8px 13px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .users-topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .users-topbar input {
+    width: 100%;
+  }
+}

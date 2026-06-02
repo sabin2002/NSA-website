@@ -11,6 +11,13 @@ import Events from "./pages/Events";
 import Surveys from "./pages/Surveys";
 import AdminEvents from "./pages/AdminEvents";
 import AdminNotices from "./pages/AdminNotices";
+import AdminJobs from "./pages/AdminJobs";
+import AdminSurveys from "./pages/AdminSurveys";
+import AdminUsers from "./pages/AdminUsers";
+
+
+
+
 
 function App() {
   return (
@@ -27,6 +34,9 @@ function App() {
         <Route path="/surveys" element={<Surveys />} />
         <Route path="/admin/events" element={<AdminEvents />} />
         <Route path="/admin/notices" element={<AdminNotices />} />
+        <Route path="/admin/jobs" element={<AdminJobs />} />
+        <Route path="/admin/surveys" element={<AdminSurveys />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
       </Routes>
     </BrowserRouter>
   );
