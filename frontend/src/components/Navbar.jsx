@@ -7,8 +7,11 @@ function Navbar() {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
     navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -24,16 +27,24 @@ function Navbar() {
         <Link to="/notices">Notices</Link>
         <Link to="/surveys">Surveys</Link>
 
+        {user && <Link to="/profile">Profile</Link>}
+
         {user?.role === "admin" && (
           <>
             <Link to="/admin/dashboard">Dashboard</Link>
             <Link to="/admin/users">Users</Link>
-            <Link to="/admin/participants">Participants</Link>
+            <Link to="/admin/participants">Event Participants</Link>
+            <Link to="/admin/job-applications">Job Applications</Link>
             <Link to="/budget">Budget</Link>
           </>
         )}
 
-        {user && (
+        {!user ? (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        ) : (
           <button className="logout-btn-nav" onClick={logout}>
             Logout
           </button>

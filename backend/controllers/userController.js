@@ -3,7 +3,18 @@ const db = require("../config/db");
 // Get all users
 exports.getUsers = (req, res) => {
   const sql = `
-    SELECT user_id, student_id, role, name, email, ph_number, nationality, department, major, enrollment_year, created_at
+    SELECT 
+      user_id,
+      student_id,
+      role,
+      name,
+      email,
+      ph_number,
+      nationality,
+      department,
+      major,
+      enrollment_year,
+      created_at
     FROM users
     ORDER BY created_at DESC
   `;
@@ -15,6 +26,38 @@ exports.getUsers = (req, res) => {
     }
 
     res.status(200).json(result);
+  });
+};
+
+// Get logged-in user's profile
+exports.getProfile = (req, res) => {
+  const sql = `
+    SELECT
+      user_id,
+      student_id,
+      name,
+      email,
+      ph_number,
+      nationality,
+      department,
+      major,
+      enrollment_year,
+      role
+    FROM users
+    WHERE user_id = ?
+  `;
+
+  db.query(sql, [req.user.user_id], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ message: "Failed to fetch profile" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(result[0]);
   });
 };
 

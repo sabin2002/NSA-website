@@ -24,6 +24,42 @@ function Jobs() {
     }
   };
 
+  const applyForJob = async (jobId) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login before applying for a job.");
+      navigate("/login");
+      return;
+    }
+
+    const message = prompt(
+      "Write a short message for your application:",
+      "I am interested in this job."
+    );
+
+    if (message === null) return;
+
+    try {
+      await API.post(
+        "/job-applications",
+        {
+          job_id: jobId,
+          message,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Job application submitted successfully");
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to submit application");
+    }
+  };
+
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch = `${job.title} ${job.company} ${job.location} ${job.description}`
       .toLowerCase()
@@ -63,57 +99,30 @@ function Jobs() {
           />
 
           <h4>Job Type</h4>
-          <label>
-            <input
-              type="radio"
-              checked={jobType === "All Types"}
-              onChange={() => setJobType("All Types")}
-            />{" "}
-            All Types
-          </label>
-          <label>
-            <input
-              type="radio"
-              checked={jobType === "Full-time"}
-              onChange={() => setJobType("Full-time")}
-            />{" "}
-            Full-time
-          </label>
-          <label>
-            <input
-              type="radio"
-              checked={jobType === "Part-time"}
-              onChange={() => setJobType("Part-time")}
-            />{" "}
-            Part-time
-          </label>
-          <label>
-            <input
-              type="radio"
-              checked={jobType === "Freelance"}
-              onChange={() => setJobType("Freelance")}
-            />{" "}
-            Freelance
-          </label>
-          <label>
-            <input
-              type="radio"
-              checked={jobType === "Internship"}
-              onChange={() => setJobType("Internship")}
-            />{" "}
-            Internship
-          </label>
-          <label>
-            <input
-              type="radio"
-              checked={jobType === "Volunteer"}
-              onChange={() => setJobType("Volunteer")}
-            />{" "}
-            Volunteer
-          </label>
+
+          {[
+            "All Types",
+            "Full-time",
+            "Part-time",
+            "Freelance",
+            "Internship",
+            "Volunteer",
+          ].map((type) => (
+            <label key={type}>
+              <input
+                type="radio"
+                checked={jobType === type}
+                onChange={() => setJobType(type)}
+              />{" "}
+              {type}
+            </label>
+          ))}
 
           <h4>Location</h4>
-          <select value={location} onChange={(e) => setLocation(e.target.value)}>
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          >
             <option>All Locations</option>
             <option>Naju</option>
             <option>Seoul</option>
@@ -151,14 +160,18 @@ function Jobs() {
                 <div className="job-info">
                   <h3>{job.title}</h3>
                   <h4>{job.company || "Company TBA"}</h4>
+
                   <p>
                     📍 {job.location || "Location TBA"} · Posted{" "}
                     {formatDate(job.created_at)}
                   </p>
+
                   <p>{job.description}</p>
+
                   <p>
                     <strong>Contact:</strong> {job.contact_info || "N/A"}
                   </p>
+
                   <p>
                     <strong>Deadline:</strong> {formatDate(job.deadline)}
                   </p>
@@ -166,7 +179,10 @@ function Jobs() {
 
                 <div className="job-action">
                   <span>{job.job_type || "Job"}</span>
-                  <button>View Details</button>
+
+                  <button onClick={() => applyForJob(job.job_id)}>
+                    Apply Now
+                  </button>
                 </div>
               </div>
             ))

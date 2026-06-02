@@ -38,6 +38,9 @@ app.use("/api/survey-responses", surveyResponseRoutes);
 const eventRegistrationRoutes = require("./routes/eventRegistrationRoutes");
 app.use("/api/event-registrations", eventRegistrationRoutes);
 
+const jobApplicationRoutes = require("./routes/jobApplicationRoutes");
+app.use("/api/job-applications", jobApplicationRoutes);
+
 app.get("/", (req, res) => {
   res.send("NSA Website Backend is Running");
 });
