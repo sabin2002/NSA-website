@@ -1,0 +1,54 @@
+.admin-responses-page {
+  min-height: 100vh;
+  background: #f3eee9;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-responses-header {
+  background: #8b1414;
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.admin-responses-header h1 {
+  margin: 0;
+}
+
+.admin-responses-header p {
+  margin: 8px 0 0;
+}
+
+.responses-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+.responses-card h2 {
+  color: #8b1414;
+  margin-top: 0;
+  text-align: center;
+}
+
+.responses-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responses-card th,
+.responses-card td {
+  padding: 13px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.responses-card th {
+  background: #f6eeee;
+  color: #8b1414;
+}

@@ -14,6 +14,8 @@ import AdminNotices from "./pages/AdminNotices";
 import AdminJobs from "./pages/AdminJobs";
 import AdminSurveys from "./pages/AdminSurveys";
 import AdminUsers from "./pages/AdminUsers";
+import AdminSurveyResponses from "./pages/AdminSurveyResponses";
+import Budget from "./pages/Budget";
 
 
 
@@ -24,7 +26,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/home" element={<Home />} />
@@ -37,6 +39,8 @@ function App() {
         <Route path="/admin/jobs" element={<AdminJobs />} />
         <Route path="/admin/surveys" element={<AdminSurveys />} />
         <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/survey-responses" element={<AdminSurveyResponses />} />
+        <Route path="/budget" element={<Budget />} />
       </Routes>
     </BrowserRouter>
   );

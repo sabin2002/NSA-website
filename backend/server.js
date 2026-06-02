@@ -29,11 +29,21 @@ app.use("/api/surveys", surveyRoutes);
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/users", userRoutes);
 
+const dashboardRoutes = require("./routes/dashboardRoutes");
+app.use("/api/dashboard", dashboardRoutes);
+
+const surveyResponseRoutes = require("./routes/surveyResponseRoutes");
+app.use("/api/survey-responses", surveyResponseRoutes);
+
 app.get("/", (req, res) => {
   res.send("NSA Website Backend is Running");
 });
 
 const PORT = process.env.PORT || 5000;
+
+app.get("/hello", (req, res) => {
+  res.send("HELLO WORKS");
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
