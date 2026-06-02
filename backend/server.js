@@ -35,6 +35,9 @@ app.use("/api/dashboard", dashboardRoutes);
 const surveyResponseRoutes = require("./routes/surveyResponseRoutes");
 app.use("/api/survey-responses", surveyResponseRoutes);
 
+const eventRegistrationRoutes = require("./routes/eventRegistrationRoutes");
+app.use("/api/event-registrations", eventRegistrationRoutes);
+
 app.get("/", (req, res) => {
   res.send("NSA Website Backend is Running");
 });

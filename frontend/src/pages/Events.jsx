@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FaHome,
@@ -16,85 +17,78 @@ import {
   FaEnvelope,
   FaPaperPlane,
 } from "react-icons/fa";
+import API from "../api/axios";
 import "./Events.css";
 
 function Events() {
   const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
+  const [search, setSearch] = useState("");
 
-  const events = [
-    {
-      title: "Cultural Night Program",
-      type: "Cultural",
-      date: "APR",
-      day: "15",
-      time: "Apr 15, 2026 · 6:00 PM",
-      location: "Seoul, Korea",
-      image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800",
-    },
-    {
-      title: "Sports Day",
-      type: "Sports",
-      date: "APR",
-      day: "22",
-      time: "Apr 22, 2026 · 9:00 AM",
-      location: "Han River Park",
-      image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=800",
-    },
-    {
-      title: "Study Abroad Seminar",
-      type: "Educational",
-      date: "APR",
-      day: "29",
-      time: "Apr 29, 2026 · 2:00 PM",
-      location: "Online (Zoom)",
-      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800",
-    },
-    {
-      title: "Hiking Trip",
-      type: "Social",
-      date: "MAY",
-      day: "05",
-      time: "May 5, 2026 · 7:00 AM",
-      location: "Bukhansan National Park",
-      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800",
-    },
-    {
-      title: "Blood Donation Program",
-      type: "Social",
-      date: "MAY",
-      day: "12",
-      time: "May 12, 2026 · 10:00 AM",
-      location: "Seoul Medical Center",
-      image: "https://images.unsplash.com/photo-1615461066841-6116e61058f4?q=80&w=800",
-    },
-    {
-      title: "Nepali Food Festival",
-      type: "Cultural",
-      date: "MAY",
-      day: "18",
-      time: "May 18, 2026 · 12:00 PM",
-      location: "Ttukseom Hangang Park",
-      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800",
-    },
-    {
-      title: "Resume Building Workshop",
-      type: "Workshop",
-      date: "MAY",
-      day: "25",
-      time: "May 25, 2026 · 1:00 PM",
-      location: "Online (Zoom)",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800",
-    },
-    {
-      title: "Volleyball Tournament",
-      type: "Sports",
-      date: "JUN",
-      day: "02",
-      time: "Jun 2, 2026 · 8:00 AM",
-      location: "Jamsil Sports Complex",
-      image: "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?q=80&w=800",
-    },
-  ];
+  const defaultImage =
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800";
+
+  const fetchEvents = async () => {
+    try {
+      const res = await API.get("/events");
+      setEvents(res.data);
+    } catch (error) {
+      alert("Failed to fetch events");
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const registerEvent = async (eventId) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login before registering for an event.");
+      navigate("/");
+      return;
+    }
+
+    try {
+      await API.post(
+        "/event-registrations",
+        { event_id: eventId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Registered successfully");
+    } catch (error) {
+      alert(error.response?.data?.message || "Registration failed");
+    }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    return new Date(dateString).toLocaleDateString();
+  };
+
+  const getMonth = (dateString) => {
+    if (!dateString) return "";
+    return new Date(dateString)
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+  };
+
+  const getDay = (dateString) => {
+    if (!dateString) return "";
+    return new Date(dateString).getDate();
+  };
+
+  const filteredEvents = events.filter((event) =>
+    `${event.title} ${event.description} ${event.location}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   return (
     <div className="events-page">
@@ -105,12 +99,24 @@ function Events() {
         </div>
 
         <div className="events-menu">
-          <button onClick={() => navigate("/home")}><FaHome /> Home</button>
-          <button onClick={() => navigate("/jobs")}><FaBriefcase /> Jobs</button>
-          <button className="active"><FaCalendarAlt /> Events</button>
-          <button onClick={() => navigate("/notices")}><FaBullhorn /> Announcements</button>
-          <button><FaBookOpen /> Resources</button>
-          <button onClick={() => navigate("/about")}><FaInfoCircle /> About Us</button>
+          <button onClick={() => navigate("/home")}>
+            <FaHome /> Home
+          </button>
+          <button onClick={() => navigate("/jobs")}>
+            <FaBriefcase /> Jobs
+          </button>
+          <button className="active">
+            <FaCalendarAlt /> Events
+          </button>
+          <button onClick={() => navigate("/notices")}>
+            <FaBullhorn /> Announcements
+          </button>
+          <button>
+            <FaBookOpen /> Resources
+          </button>
+          <button onClick={() => navigate("/about")}>
+            <FaInfoCircle /> About Us
+          </button>
           <button onClick={() => navigate("/")}>Login</button>
           <button onClick={() => navigate("/register")}>Register</button>
         </div>
@@ -130,16 +136,34 @@ function Events() {
           <h3>Filter Events</h3>
 
           <label>Search Events</label>
-          <input placeholder="Search by event name, keyword..." />
+          <input
+            placeholder="Search by event name, keyword..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
           <h4>Event Type</h4>
-          <label><input type="checkbox" defaultChecked /> All Types</label>
-          <label><input type="checkbox" /> Cultural</label>
-          <label><input type="checkbox" /> Sports</label>
-          <label><input type="checkbox" /> Educational</label>
-          <label><input type="checkbox" /> Social</label>
-          <label><input type="checkbox" /> Workshop</label>
-          <label><input type="checkbox" /> Other</label>
+          <label>
+            <input type="checkbox" defaultChecked /> All Types
+          </label>
+          <label>
+            <input type="checkbox" /> Cultural
+          </label>
+          <label>
+            <input type="checkbox" /> Sports
+          </label>
+          <label>
+            <input type="checkbox" /> Educational
+          </label>
+          <label>
+            <input type="checkbox" /> Social
+          </label>
+          <label>
+            <input type="checkbox" /> Workshop
+          </label>
+          <label>
+            <input type="checkbox" /> Other
+          </label>
 
           <h4>Date</h4>
           <input type="date" />
@@ -152,15 +176,21 @@ function Events() {
             <option>Online</option>
           </select>
 
-          <button className="apply-btn"><FaFilter /> Apply Filters</button>
-          <button className="clear-btn"><FaUndo /> Clear Filters</button>
+          <button className="apply-btn">
+            <FaFilter /> Apply Filters
+          </button>
+          <button className="clear-btn" onClick={() => setSearch("")}>
+            <FaUndo /> Clear Filters
+          </button>
         </aside>
 
         <section className="events-main-list">
           <div className="events-header">
             <div>
               <h3>All Events</h3>
-              <p>Showing 8 of 8 events</p>
+              <p>
+                Showing {filteredEvents.length} of {events.length} events
+              </p>
             </div>
 
             <select>
@@ -171,27 +201,39 @@ function Events() {
           </div>
 
           <div className="events-grid">
-            {events.map((event, index) => (
-              <div className="event-card" key={index}>
-                <div className="event-img-wrap">
-                  <img src={event.image} alt={event.title} />
-                  <div className="floating-date">
-                    <span>{event.date}</span>
-                    <b>{event.day}</b>
+            {filteredEvents.length === 0 ? (
+              <p>No events found.</p>
+            ) : (
+              filteredEvents.map((event) => (
+                <div className="event-card" key={event.event_id}>
+                  <div className="event-img-wrap">
+                    <img src={event.image || defaultImage} alt={event.title} />
+                    <div className="floating-date">
+                      <span>{getMonth(event.event_date)}</span>
+                      <b>{getDay(event.event_date)}</b>
+                    </div>
+                  </div>
+
+                  <div className="event-body">
+                    <span className="event-tag sports">Event</span>
+                    <h3>{event.title}</h3>
+                    <p>
+                      <FaClock /> {formatDate(event.event_date)} ·{" "}
+                      {event.event_time || "Time TBA"}
+                    </p>
+                    <p>
+                      <FaMapMarkerAlt /> {event.location || "Location TBA"}
+                    </p>
+
+                    <p>{event.description}</p>
+
+                    <button onClick={() => registerEvent(event.event_id)}>
+                      Register
+                    </button>
                   </div>
                 </div>
-
-                <div className="event-body">
-                  <span className={`event-tag ${event.type.toLowerCase()}`}>
-                    {event.type}
-                  </span>
-                  <h3>{event.title}</h3>
-                  <p><FaClock /> {event.time}</p>
-                  <p><FaMapMarkerAlt /> {event.location}</p>
-                  <button>View Details</button>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           <div className="events-pagination">
@@ -208,16 +250,21 @@ function Events() {
               <span>View All</span>
             </div>
 
-            {events.slice(0, 4).map((event, index) => (
-              <div className="mini-event" key={index}>
+            {events.slice(0, 4).map((event) => (
+              <div className="mini-event" key={event.event_id}>
                 <div className="mini-date">
-                  <span>{event.date}</span>
-                  <b>{event.day}</b>
+                  <span>{getMonth(event.event_date)}</span>
+                  <b>{getDay(event.event_date)}</b>
                 </div>
                 <div>
                   <h4>{event.title}</h4>
-                  <p><FaClock /> {event.time}</p>
-                  <p><FaMapMarkerAlt /> {event.location}</p>
+                  <p>
+                    <FaClock /> {formatDate(event.event_date)} ·{" "}
+                    {event.event_time || "Time TBA"}
+                  </p>
+                  <p>
+                    <FaMapMarkerAlt /> {event.location || "Location TBA"}
+                  </p>
                 </div>
               </div>
             ))}
@@ -234,7 +281,9 @@ function Events() {
             <p>Subscribe to our newsletter to get the latest event updates.</p>
             <div className="subscribe-row">
               <input placeholder="Enter your email" />
-              <button><FaPaperPlane /></button>
+              <button>
+                <FaPaperPlane />
+              </button>
             </div>
           </div>
         </aside>
