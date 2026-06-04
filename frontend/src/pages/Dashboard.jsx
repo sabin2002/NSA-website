@@ -9,6 +9,8 @@ import {
   FaWallet,
   FaSignOutAlt,
   FaHome,
+  FaFilePdf,
+  FaClipboardList,
 } from "react-icons/fa";
 import {
   BarChart,
@@ -36,10 +38,9 @@ function Dashboard() {
   });
 
   const [budget, setBudget] = useState([]);
-
   const user = JSON.parse(localStorage.getItem("user")) || {
     name: "Admin",
-    role: "Admin",
+    role: "admin",
   };
 
   useEffect(() => {
@@ -58,7 +59,14 @@ function Dashboard() {
 
   const fetchBudget = async () => {
     try {
-      const res = await API.get("/budget");
+      const token = localStorage.getItem("token");
+
+      const res = await API.get("/budget", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       setBudget(res.data);
     } catch (error) {
       console.log("Failed to fetch budget", error);
@@ -102,12 +110,20 @@ function Dashboard() {
           <p>Admin Panel</p>
         </div>
 
+        <button onClick={() => navigate("/admin/dashboard")}>
+          <FaHome /> Dashboard
+        </button>
+
         <button onClick={() => navigate("/home")}>
-          <FaHome /> Home
+          <FaHome /> Website Home
         </button>
 
         <button onClick={() => navigate("/admin/events")}>
           <FaCalendarAlt /> Events
+        </button>
+
+        <button onClick={() => navigate("/admin/participants")}>
+          <FaUsers /> Event Participants
         </button>
 
         <button onClick={() => navigate("/admin/notices")}>
@@ -118,16 +134,28 @@ function Dashboard() {
           <FaBriefcase /> Jobs
         </button>
 
+        <button onClick={() => navigate("/admin/job-applications")}>
+          <FaClipboardList /> Job Applications
+        </button>
+
         <button onClick={() => navigate("/admin/surveys")}>
           <FaPoll /> Surveys
         </button>
 
-        <button onClick={() => navigate("/budget")}>
-          <FaWallet /> Budget
+        <button onClick={() => navigate("/admin/survey-responses")}>
+          <FaClipboardList /> Survey Responses
+        </button>
+
+        <button onClick={() => navigate("/admin/resources")}>
+          <FaFilePdf /> Resources
         </button>
 
         <button onClick={() => navigate("/admin/users")}>
           <FaUsers /> Users
+        </button>
+
+        <button onClick={() => navigate("/budget")}>
+          <FaWallet /> Budget
         </button>
 
         <button className="logout-btn" onClick={handleLogout}>
@@ -243,18 +271,39 @@ function Dashboard() {
               <button onClick={() => navigate("/admin/events")}>
                 <FaCalendarAlt /> Manage Events
               </button>
+
+              <button onClick={() => navigate("/admin/participants")}>
+                <FaUsers /> Event Participants
+              </button>
+
               <button onClick={() => navigate("/admin/notices")}>
                 <FaBullhorn /> Manage Notices
               </button>
+
               <button onClick={() => navigate("/admin/jobs")}>
                 <FaBriefcase /> Manage Jobs
               </button>
+
+              <button onClick={() => navigate("/admin/job-applications")}>
+                <FaClipboardList /> Job Applications
+              </button>
+
               <button onClick={() => navigate("/admin/surveys")}>
                 <FaPoll /> Manage Surveys
               </button>
+
+              <button onClick={() => navigate("/admin/survey-responses")}>
+                <FaClipboardList /> Survey Responses
+              </button>
+
+              <button onClick={() => navigate("/admin/resources")}>
+                <FaFilePdf /> Manage Resources
+              </button>
+
               <button onClick={() => navigate("/budget")}>
                 <FaWallet /> Manage Budget
               </button>
+
               <button onClick={() => navigate("/admin/users")}>
                 <FaUsers /> Manage Users
               </button>
@@ -276,15 +325,15 @@ function Dashboard() {
               <span>📊</span>
               <div>
                 <h4>Core CRUD Modules Completed</h4>
-                <p>Events, Notices, Jobs, Surveys, and Users are connected to MySQL.</p>
+                <p>Events, Notices, Jobs, Surveys, Users, Resources, and Budget are connected to MySQL.</p>
               </div>
             </div>
 
             <div className="activity-item">
               <span>🚀</span>
               <div>
-                <h4>Dashboard Charts Active</h4>
-                <p>Dashboard now displays live charts using Recharts.</p>
+                <h4>Student Participation Features Active</h4>
+                <p>Students can register for events, apply for jobs, submit surveys, and download resources.</p>
               </div>
             </div>
           </div>
@@ -306,34 +355,46 @@ function Dashboard() {
             <tbody>
               <tr>
                 <td>Events</td>
-                <td>Create, view, update, delete, and register participants</td>
+                <td>Create, view, update, delete, and view registered participants</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
+
               <tr>
                 <td>Jobs</td>
-                <td>Post and manage job opportunities</td>
+                <td>Post jobs and view student job applications</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
+
               <tr>
                 <td>Notices</td>
                 <td>Publish and manage announcements</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
+
               <tr>
                 <td>Surveys</td>
-                <td>Create surveys and view survey responses</td>
+                <td>Create surveys and view submitted responses</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
+
+              <tr>
+                <td>Resources</td>
+                <td>Upload, edit, delete, and share files with students</td>
+                <td><span className="status progress">Completed</span></td>
+                <td>High</td>
+              </tr>
+
               <tr>
                 <td>Users</td>
                 <td>View users, change roles, and delete accounts</td>
                 <td><span className="status progress">Completed</span></td>
                 <td>High</td>
               </tr>
+
               <tr>
                 <td>Budget</td>
                 <td>Manage income, expenses, and balance</td>

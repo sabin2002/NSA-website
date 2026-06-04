@@ -1,53 +1,73 @@
 import { Link, useNavigate } from "react-router-dom";
+import {
+  FaHome,
+  FaBriefcase,
+  FaCalendarAlt,
+  FaBullhorn,
+  FaBookOpen,
+  FaClipboardList,
+  FaInfoCircle,
+  FaUserCircle,
+} from "react-icons/fa";
+import logo from "../assets/nsa-logo.png";
 import "./Navbar.css";
 
 function Navbar() {
   const navigate = useNavigate();
-
   const user = JSON.parse(localStorage.getItem("user"));
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
     navigate("/");
     window.location.reload();
   };
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <h2>NSA</h2>
+      <div className="navbar-logo" onClick={() => navigate("/")}>
+        <img src={logo} alt="NSA Logo" />
       </div>
 
-      <div className="navbar-links">
-        <Link to="/home">Home</Link>
-        <Link to="/events">Events</Link>
-        <Link to="/jobs">Jobs</Link>
-        <Link to="/notices">Notices</Link>
-        <Link to="/surveys">Surveys</Link>
+      <div className="navbar-menu">
+        <Link to="/"><FaHome /> Home</Link>
+        <Link to="/jobs"><FaBriefcase /> Jobs</Link>
+        <Link to="/events"><FaCalendarAlt /> Events</Link>
+        <Link to="/notices"><FaBullhorn /> Announcements</Link>
+        <Link to="/resources"><FaBookOpen /> Resources</Link>
+        <Link to="/surveys"><FaClipboardList /> Surveys</Link>
+        <Link to="/about"><FaInfoCircle /> About Us</Link>
+      </div>
 
-        {user && <Link to="/profile">Profile</Link>}
-
-        {user?.role === "admin" && (
-          <>
-            <Link to="/admin/dashboard">Dashboard</Link>
-            <Link to="/admin/users">Users</Link>
-            <Link to="/admin/participants">Event Participants</Link>
-            <Link to="/admin/job-applications">Job Applications</Link>
-            <Link to="/budget">Budget</Link>
-          </>
-        )}
-
+      <div className="navbar-auth">
         {!user ? (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <Link className="login-btn" to="/login">Login</Link>
+            <Link className="register-btn" to="/register">Register</Link>
           </>
         ) : (
-          <button className="logout-btn-nav" onClick={logout}>
-            Logout
-          </button>
+          <div className="user-dropdown">
+            <button className="user-btn">
+              <FaUserCircle /> {user.role === "admin" ? "Admin" : "Profile"}
+            </button>
+
+            <div className="dropdown-menu">
+              <Link to="/profile">My Profile</Link>
+
+              {user.role === "admin" && (
+                <>
+                  <Link to="/admin/dashboard">Dashboard</Link>
+                  <Link to="/admin/users">Users</Link>
+                  <Link to="/admin/participants">Participants</Link>
+                  <Link to="/admin/job-applications">Job Applications</Link>
+                  <Link to="/budget">Budget</Link>
+                  <Link to="/admin/resources">Manage Resources</Link>
+                </>
+              )}
+
+              <button onClick={logout}>Logout</button>
+            </div>
+          </div>
         )}
       </div>
     </nav>

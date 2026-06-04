@@ -5,203 +5,212 @@
   color: #1c1c1c;
 }
 
-.home-nav {
-  height: 78px;
-  background: #8b1414;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 70px;
-}
-
-.brand h2 {
-  margin: 0;
-  font-size: 30px;
-  color: #ffcc66;
-  font-weight: 900;
-}
-
-.brand span {
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.nav-menu a {
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.nav-menu button {
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 7px;
-}
-
-.nav-menu button:last-child {
-  background: #244c93;
-  border-color: #244c93;
-}
-
+/* HERO */
 .hero-section {
-  height: 420px;
+  min-height: 520px;
+
   background:
-    linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)),
-    url("https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1600");
+    linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)),
+    url("C:\Users\User\Desktop\Project\NSA-website\frontend\src\pages\images\background.png");
+
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
+  align-items: center;
+
   border-bottom: 5px solid #8b1414;
 }
 
 .hero-content {
-  background: rgba(255, 255, 255, 0.45);
-  padding: 35px 70px;
-  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(6px);
+  padding: 42px 80px;
+  border-radius: 22px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
 }
 
 .hero-content h1 {
-  font-size: 75px;
-  color: #b91f1f;
+  font-size: 76px;
+  color: #b92a25;
   margin: 0;
   font-weight: 900;
+  letter-spacing: 2px;
 }
 
 .hero-content h2 {
   font-family: Georgia, serif;
-  font-size: 42px;
+  font-size: 43px;
   margin: 0;
+  color: #222;
 }
 
 .hero-content p {
   font-size: 22px;
-  margin: 18px 0;
+  margin: 20px 0;
 }
 
 .hero-content button {
-  background: #b51c1c;
+  background: #b82622;
   color: white;
   border: none;
-  padding: 13px 35px;
+  padding: 14px 38px;
   border-radius: 8px;
   margin: 8px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .hero-content .blue {
-  background: #1d4f91;
+  background: #244c93;
 }
 
+.hero-content button:hover {
+  opacity: 0.9;
+}
+
+/* CARDS */
 .cards-section {
   max-width: 1450px;
-  margin: 25px auto;
+  margin: 28px auto;
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr 0.9fr;
+  grid-template-columns: 1.25fr 1fr 1fr 0.95fr;
   gap: 22px;
   padding: 0 25px;
 }
 
 .info-card,
 .login-card {
-  background: rgba(255,255,255,0.92);
-  border-radius: 12px;
-  padding: 22px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.11);
+  border: 1px solid rgba(140, 30, 25, 0.08);
 }
 
 .card-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-title h3 {
+  margin: 0;
+  font-size: 27px;
+  color: #111;
 }
 
 .card-title span {
-  color: #1d4f91;
+  color: #244c93;
   font-size: 14px;
   cursor: pointer;
 }
 
-.event-item,
-.job-item {
-  display: flex;
-  gap: 15px;
-  padding: 14px 0;
-  border-bottom: 1px solid #ddd;
+/* EVENTS */
+.event-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e5ded9;
 }
 
 .date-box {
-  width: 65px;
-  height: 75px;
+  width: 62px;
+  height: 72px;
   color: white;
   border-radius: 8px;
   text-align: center;
   padding-top: 8px;
   font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.16);
 }
 
 .date-box b {
-  font-size: 28px;
+  font-size: 29px;
 }
 
 .red {
-  background: #bd2222;
+  background: #bd2925;
 }
 
 .blue-bg {
-  background: #1f5ba8;
+  background: #285aa8;
 }
 
-.event-item h4,
+.event-item h4 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.event-item p {
+  margin: 3px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* JOBS */
+.job-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e5ded9;
+}
+
 .job-item h4 {
-  margin: 0 0 7px;
+  margin: 0 0 8px;
+  font-size: 18px;
 }
 
-.event-item p,
 .job-item p {
   margin: 2px 0;
   color: #666;
   font-size: 14px;
 }
 
-.job-item {
-  justify-content: space-between;
-}
-
 .job-item span {
   background: #e7f2d7;
   color: #3a7d2a;
   padding: 8px 13px;
-  border-radius: 5px;
+  border-radius: 7px;
   height: fit-content;
   font-size: 13px;
 }
 
+/* NOTICES + SURVEYS */
 .notice-item {
-  padding: 15px;
-  border-bottom: 1px solid #ddd;
+  padding: 16px 0;
+  border-bottom: 1px solid #e5ded9;
   font-weight: 600;
+  line-height: 1.4;
 }
 
 .outline-btn {
   width: 100%;
   margin-top: 18px;
-  padding: 12px;
-  border: 1px solid #1d4f91;
-  color: #1d4f91;
+  padding: 13px;
+  border: 1px solid #244c93;
+  color: #244c93;
   background: white;
   border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.outline-btn:hover {
+  background: #244c93;
+  color: white;
+}
+
+/* LOGIN CARD */
+.login-card h3 {
+  font-size: 28px;
+  text-align: center;
+  margin-top: 0;
 }
 
 .login-card label {
@@ -216,7 +225,7 @@
   padding: 13px;
   margin-top: 7px;
   border: 1px solid #ccc;
-  border-radius: 7px;
+  border-radius: 8px;
 }
 
 .login-options {
@@ -228,18 +237,19 @@
 
 .login-options span,
 .login-card p span {
-  color: #1d4f91;
+  color: #244c93;
   cursor: pointer;
 }
 
 .login-card button {
   width: 100%;
-  padding: 13px;
+  padding: 14px;
   background: #c92727;
   border: none;
   color: white;
-  border-radius: 7px;
+  border-radius: 8px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .login-card p {
@@ -248,39 +258,32 @@
   font-size: 14px;
 }
 
-.home-footer {
-  max-width: 1450px;
-  margin: 20px auto;
-  background: rgba(255,255,255,0.85);
-  border-radius: 12px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 30px;
-  padding: 25px;
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .cards-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@media (max-width: 1100px) {
-  .home-nav {
-    height: auto;
-    padding: 20px;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .nav-menu {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
+@media (max-width: 750px) {
   .cards-section {
     grid-template-columns: 1fr;
+    padding: 0 15px;
   }
 
-  .home-footer {
-    grid-template-columns: 1fr;
+  .hero-content {
+    padding: 30px 25px;
   }
 
   .hero-content h1 {
     font-size: 45px;
+  }
+
+  .hero-content h2 {
+    font-size: 30px;
+  }
+
+  .hero-content p {
+    font-size: 17px;
   }
 }

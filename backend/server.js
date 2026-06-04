@@ -5,6 +5,13 @@ const db = require("./config/db");
 
 
 const app = express();
+const path = require("path");
+app.use(
+  "/uploads",
+  express.static(
+    path.join(__dirname, "uploads")
+  )
+);
 
 app.use(cors());
 app.use(express.json());
@@ -40,6 +47,9 @@ app.use("/api/event-registrations", eventRegistrationRoutes);
 
 const jobApplicationRoutes = require("./routes/jobApplicationRoutes");
 app.use("/api/job-applications", jobApplicationRoutes);
+
+const resourceRoutes = require("./routes/resourceRoutes");
+app.use("/api/resources", resourceRoutes);
 
 app.get("/", (req, res) => {
   res.send("NSA Website Backend is Running");

@@ -19,6 +19,8 @@ import Budget from "./pages/Budget";
 import AdminParticipants from "./pages/AdminParticipants";
 import Profile from "./pages/Profile";
 import AdminJobApplications from "./pages/AdminJobApplications";
+import Resources from "./pages/Resources";
+import AdminResources from "./pages/AdminResources";
 
 import AdminRoute from "./components/AdminRoute";
 import Navbar from "./components/Navbar";
@@ -30,7 +32,9 @@ function AppContent() {
   const location = useLocation();
 
   const hideLayout =
-    location.pathname === "/login" || location.pathname === "/register";
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname.startsWith("/admin");
 
   return (
     <div className="app-container">
@@ -49,6 +53,7 @@ function AppContent() {
           <Route path="/events" element={<Events />} />
           <Route path="/surveys" element={<Surveys />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/resources" element={<Resources />} />
 
           <Route
             path="/admin/dashboard"
@@ -127,6 +132,15 @@ function AppContent() {
             element={
               <AdminRoute>
                 <AdminParticipants />
+              </AdminRoute>
+            }
+          />
+
+          <Route
+            path="/admin/resources"
+            element={
+              <AdminRoute>
+                <AdminResources />
               </AdminRoute>
             }
           />
