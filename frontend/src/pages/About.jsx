@@ -26,23 +26,7 @@ function About() {
 
   return (
     <div className="about-page">
-      <nav className="about-nav">
-        <div className="about-logo" onClick={() => navigate("/home")}>
-          <h2>NEPALESE</h2>
-          <span>Student Association</span>
-        </div>
-
-        <div className="about-menu">
-          <button onClick={() => navigate("/home")}><FaHome /> Home</button>
-          <button onClick={() => navigate("/jobs")}><FaBriefcase /> Jobs</button>
-          <button onClick={() => navigate("/events")}><FaCalendarAlt /> Events</button>
-          <button onClick={() => navigate("/notices")}><FaBullhorn /> Announcements</button>
-          <button><FaBookOpen /> Resources</button>
-          <button className="active"><FaInfoCircle /> About Us</button>
-          <button onClick={() => navigate("/")}>Login</button>
-          <button onClick={() => navigate("/register")}>Register</button>
-        </div>
-      </nav>
+      
 
       <section className="about-hero">
         <h1>About Us</h1>
