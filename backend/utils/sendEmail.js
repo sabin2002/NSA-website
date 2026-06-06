@@ -1,37 +1,25 @@
-const nodemailer = require("nodemailer");
+const axios = require("axios");
 
 const sendEmail = async (to, subject, text) => {
-  console.log("SMTP_HOST:", process.env.SMTP_HOST);
-  console.log("SMTP_PORT:", process.env.SMTP_PORT);
-  console.log("SMTP_USER:", process.env.SMTP_USER);
-  console.log("SMTP_PASS exists:", !!process.env.SMTP_PASS);
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: false,
-    requireTLS: true,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+  await axios.post(
+    "https://api.brevo.com/v3/smtp/email",
+    {
+      sender: {
+        name: process.env.BREVO_SENDER_NAME || "NSA Website",
+        email: process.env.BREVO_SENDER_EMAIL,
+      },
+      to: [{ email: to }],
+      subject,
+      textContent: text,
     },
-  });
-
-  try {
-    await transporter.verify();
-    console.log("✅ SMTP Connection Verified");
-  } catch (err) {
-    console.log("❌ SMTP Verify Error:");
-    console.log(err);
-    throw err;
-  }
-
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to,
-    subject,
-    text,
-  });
+    {
+      headers: {
+        "api-key": process.env.BREVO_API_KEY,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }
+  );
 };
 
 module.exports = sendEmail;
