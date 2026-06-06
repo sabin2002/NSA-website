@@ -131,7 +131,7 @@ function AdminEvents() {
             value={formData.description}
             onChange={handleChange}
             placeholder="Enter event description"
-            required
+            
           />
 
           <label>Event Date</label>

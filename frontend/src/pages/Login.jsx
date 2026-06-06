@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axios";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,8 +23,6 @@ function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      alert("Login successful");
-
       if (user.role === "admin") {
         navigate("/admin/dashboard");
       } else {
@@ -35,44 +34,75 @@ function Login() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>NSA Website Login</h2>
+    <div className="login-page">
+      <div className="login-banner">
+        <div className="banner-overlay">
+          <h1>NEPALESE</h1>
+          <h2>Student Association</h2>
+          <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
+        </div>
+      </div>
 
-      <form
-        onSubmit={handleLogin}
-        className="mt-4"
-        style={{ maxWidth: "400px" }}
-      >
-        <div className="mb-3">
-          <label>Email</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+      <div className="login-card">
+        <div className="login-left">
+          <h2>Welcome Back!</h2>
+
+          <p>
+            Login to your NSA account and access events, jobs,
+            announcements, surveys, and resources.
+          </p>
+
+          <img
+            src="C:\Users\User\Desktop\Project\NSA-website\frontend\src\pages\images\logo.png"
+            alt="NSA"
+            className="welcome-logo"
           />
+
+          <h3>Stay Connected</h3>
+
+          <p>
+            Empowering Nepalese students through information,
+            opportunities, and community engagement.
+          </p>
         </div>
 
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className="login-right">
+          <h2>Login To Your Account</h2>
+
+          <form onSubmit={handleLogin}>
+            <label>Email Address</label>
+
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <label>Password</label>
+
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <button type="submit">
+              Login
+            </button>
+          </form>
+<p className="text-end mt-2">
+  <a href="/forgot-password">Forgot Password?</a>
+</p>
+          <p className="register-text">
+            Don't have an account?
+            <Link to="/register"> Register here</Link>
+          </p>
         </div>
-
-        <button className="btn btn-primary w-100">Login</button>
-
-        <p className="mt-3">
-          Don't have an account? <a href="/register">Register here</a>
-        </p>
-      </form>
+      </div>
     </div>
   );
 }

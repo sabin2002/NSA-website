@@ -1,0 +1,136 @@
+.login-page {
+  min-height: 100vh;
+  background: #f5f1ec;
+}
+
+.login-banner {
+  height: 350px;
+  background-image: url("C:\Users\User\Desktop\Project\NSA-website\frontend\src\pages\images\background.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.banner-overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #7f1712;
+}
+
+.banner-overlay h1 {
+  font-size: 80px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.banner-overlay h2 {
+  font-size: 50px;
+  margin: 0;
+}
+
+.banner-overlay p {
+  font-size: 24px;
+}
+
+.login-card {
+  width: 1000px;
+  max-width: 95%;
+  margin: -80px auto 50px;
+  background: white;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.login-left {
+  padding: 50px;
+  text-align: center;
+  border-right: 1px solid #eee;
+}
+
+.login-left h2 {
+  color: #7f1712;
+}
+
+.welcome-logo {
+  width: 160px;
+  margin: 30px 0;
+}
+
+.login-right {
+  padding: 50px;
+}
+
+.login-right h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-right form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-right label {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.login-right input {
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.login-right button {
+  background: #c22b2b;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-right button:hover {
+  background: #a91f1f;
+}
+
+.register-text {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-text a {
+  color: #244c93;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .login-card {
+    grid-template-columns: 1fr;
+  }
+
+  .login-left {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .banner-overlay h1 {
+    font-size: 50px;
+  }
+
+  .banner-overlay h2 {
+    font-size: 32px;
+  }
+}

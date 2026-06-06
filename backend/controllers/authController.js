@@ -3,7 +3,6 @@ const db = require("../config/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 // Register new user
 exports.register = async (req, res) => {
   try {
@@ -20,7 +19,6 @@ exports.register = async (req, res) => {
       enrollment_year,
     } = req.body;
 
-    // Check if OTP is verified
     const otpSql = `
       SELECT * FROM otp_verifications
       WHERE email = ? AND is_verified = TRUE
@@ -39,7 +37,6 @@ exports.register = async (req, res) => {
         });
       }
 
-      // Hash password only after OTP is verified
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const sql = `
@@ -52,7 +49,7 @@ exports.register = async (req, res) => {
         sql,
         [
           student_id,
-          role,
+          role || "student",
           name,
           email,
           hashedPassword,
@@ -65,6 +62,13 @@ exports.register = async (req, res) => {
         (err) => {
           if (err) {
             console.log(err);
+
+            if (err.code === "ER_DUP_ENTRY") {
+              return res.status(400).json({
+                message: "Email or Student ID already exists",
+              });
+            }
+
             return res.status(500).json({
               message: "Registration failed",
             });
@@ -84,7 +88,6 @@ exports.register = async (req, res) => {
     });
   }
 };
-
 
 // Login user
 exports.login = (req, res) => {
@@ -131,47 +134,66 @@ exports.login = (req, res) => {
       token,
       user: {
         user_id: user.user_id,
+        student_id: user.student_id,
         name: user.name,
         email: user.email,
         role: user.role,
+        ph_number: user.ph_number,
+        nationality: user.nationality,
+        department: user.department,
+        major: user.major,
+        enrollment_year: user.enrollment_year,
       },
     });
   });
 };
 
+// Send OTP for registration
 exports.sendOtp = (req, res) => {
   const { email } = req.body;
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
   const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
-  const sql = `
-    INSERT INTO otp_verifications (email, otp_code, expires_at)
-    VALUES (?, ?, ?)
+  const deleteOldOtpSql = `
+    DELETE FROM otp_verifications
+    WHERE email = ?
   `;
 
-  db.query(sql, [email, otp, expiresAt], async (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ message: "Failed to save OTP" });
+  db.query(deleteOldOtpSql, [email], (deleteErr) => {
+    if (deleteErr) {
+      console.log(deleteErr);
+      return res.status(500).json({ message: "Failed to clear old OTP" });
     }
 
-    try {
-      await sendEmail(
-        email,
-        "NSA Website Registration OTP",
-        `Your OTP code is ${otp}. It will expire in 5 minutes.`
-      );
+    const sql = `
+      INSERT INTO otp_verifications (email, otp_code, expires_at, is_verified)
+      VALUES (?, ?, ?, FALSE)
+    `;
 
-      res.status(200).json({ message: "OTP sent to email" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Failed to send OTP email" });
-    }
+    db.query(sql, [email, otp, expiresAt], async (err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Failed to save OTP" });
+      }
+
+      try {
+        await sendEmail(
+          email,
+          "NSA Website Registration OTP",
+          `Your NSA Website registration OTP code is ${otp}. It will expire in 5 minutes.`
+        );
+
+        res.status(200).json({ message: "OTP sent to email" });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Failed to send OTP email" });
+      }
+    });
   });
 };
 
+// Verify OTP
 exports.verifyOtp = (req, res) => {
   const { email, otp } = req.body;
 
@@ -203,6 +225,133 @@ exports.verifyOtp = (req, res) => {
       }
 
       res.status(200).json({ message: "OTP verified successfully" });
+    });
+  });
+};
+
+// Send OTP for forgot password
+exports.forgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  const checkUserSql = "SELECT * FROM users WHERE email = ?";
+
+  db.query(checkUserSql, [email], (userErr, userResult) => {
+    if (userErr) {
+      return res.status(500).json({ message: "Server error" });
+    }
+
+    if (userResult.length === 0) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+    const deleteOldOtpSql = `
+      DELETE FROM otp_verifications
+      WHERE email = ?
+    `;
+
+    db.query(deleteOldOtpSql, [email], (deleteErr) => {
+      if (deleteErr) {
+        console.log(deleteErr);
+        return res.status(500).json({ message: "Failed to clear old OTP" });
+      }
+
+      const sql = `
+        INSERT INTO otp_verifications (email, otp_code, expires_at, is_verified)
+        VALUES (?, ?, ?, FALSE)
+      `;
+
+      db.query(sql, [email, otp, expiresAt], async (err) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ message: "Failed to save OTP" });
+        }
+
+        try {
+          await sendEmail(
+            email,
+            "NSA Website Password Reset OTP",
+            `Your NSA Website password reset OTP is ${otp}. It will expire in 5 minutes.`
+          );
+
+          res.status(200).json({
+            message: "Password reset OTP sent to email",
+          });
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: "Failed to send OTP email" });
+        }
+      });
+    });
+  });
+};
+
+// Reset password using OTP
+exports.resetPassword = (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  if (!email || !otp || !newPassword) {
+    return res.status(400).json({
+      message: "Email, OTP, and new password are required",
+    });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({
+      message: "Password must be at least 6 characters",
+    });
+  }
+
+  const otpSql = `
+    SELECT * FROM otp_verifications
+    WHERE email = ?
+    AND otp_code = ?
+    AND expires_at > NOW()
+    AND is_verified = FALSE
+    ORDER BY created_at DESC
+    LIMIT 1
+  `;
+
+  db.query(otpSql, [email, otp], async (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Server error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(400).json({ message: "Invalid or expired OTP" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const updateSql = `
+      UPDATE users
+      SET pass_hash = ?
+      WHERE email = ?
+    `;
+
+    db.query(updateSql, [hashedPassword, email], (updateErr) => {
+      if (updateErr) {
+        console.log(updateErr);
+        return res.status(500).json({ message: "Failed to reset password" });
+      }
+
+      const markOtpSql = `
+        UPDATE otp_verifications
+        SET is_verified = TRUE
+        WHERE otp_id = ?
+      `;
+
+      db.query(markOtpSql, [result[0].otp_id], (markErr) => {
+        if (markErr) {
+          console.log(markErr);
+        }
+
+        res.status(200).json({
+          message: "Password reset successfully",
+        });
+      });
     });
   });
 };

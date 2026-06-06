@@ -25,6 +25,8 @@ import AdminResources from "./pages/AdminResources";
 import AdminRoute from "./components/AdminRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 import "./App.css";
 
@@ -54,6 +56,9 @@ function AppContent() {
           <Route path="/surveys" element={<Surveys />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
 
           <Route
             path="/admin/dashboard"
@@ -154,6 +159,7 @@ function AppContent() {
             }
           />
         </Routes>
+       
       </main>
 
       {!hideLayout && <Footer />}

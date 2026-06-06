@@ -310,100 +310,10 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="activity-card">
-            <h2>Project Summary</h2>
-
-            <div className="activity-item">
-              <span>✅</span>
-              <div>
-                <h4>Authentication Completed</h4>
-                <p>Register, OTP, login, JWT, and admin authorization are working.</p>
-              </div>
-            </div>
-
-            <div className="activity-item">
-              <span>📊</span>
-              <div>
-                <h4>Core CRUD Modules Completed</h4>
-                <p>Events, Notices, Jobs, Surveys, Users, Resources, and Budget are connected to MySQL.</p>
-              </div>
-            </div>
-
-            <div className="activity-item">
-              <span>🚀</span>
-              <div>
-                <h4>Student Participation Features Active</h4>
-                <p>Students can register for events, apply for jobs, submit surveys, and download resources.</p>
-              </div>
-            </div>
-          </div>
+        
+           
         </section>
 
-        <section className="table-section">
-          <h2>Admin Tasks Overview</h2>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Module</th>
-                <th>Task</th>
-                <th>Status</th>
-                <th>Priority</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>Events</td>
-                <td>Create, view, update, delete, and view registered participants</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>High</td>
-              </tr>
-
-              <tr>
-                <td>Jobs</td>
-                <td>Post jobs and view student job applications</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>High</td>
-              </tr>
-
-              <tr>
-                <td>Notices</td>
-                <td>Publish and manage announcements</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>High</td>
-              </tr>
-
-              <tr>
-                <td>Surveys</td>
-                <td>Create surveys and view submitted responses</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>High</td>
-              </tr>
-
-              <tr>
-                <td>Resources</td>
-                <td>Upload, edit, delete, and share files with students</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>High</td>
-              </tr>
-
-              <tr>
-                <td>Users</td>
-                <td>View users, change roles, and delete accounts</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>High</td>
-              </tr>
-
-              <tr>
-                <td>Budget</td>
-                <td>Manage income, expenses, and balance</td>
-                <td><span className="status progress">Completed</span></td>
-                <td>Medium</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
       </main>
     </div>
   );

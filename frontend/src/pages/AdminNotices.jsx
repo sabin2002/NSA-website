@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react";
+import {
+  FaBullhorn,
+  FaEdit,
+  FaTrash,
+  FaPlus,
+  FaSearch,
+  FaTimes,
+  FaCalendarAlt,
+} from "react-icons/fa";
 import API from "../api/axios";
 import "./AdminNotices.css";
 
 function AdminNotices() {
   const [notices, setNotices] = useState([]);
   const [editingId, setEditingId] = useState(null);
+  const [search, setSearch] = useState("");
 
   const [formData, setFormData] = useState({
     title: "",
     content: "",
   });
+
+  useEffect(() => {
+    fetchNotices();
+  }, []);
 
   const getAuthHeader = () => {
     const token = localStorage.getItem("token");
@@ -26,10 +40,6 @@ function AdminNotices() {
       alert("Failed to fetch notices");
     }
   };
-
-  useEffect(() => {
-    fetchNotices();
-  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -78,6 +88,8 @@ function AdminNotices() {
       title: notice.title || "",
       content: notice.content || "",
     });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDelete = async (id) => {
@@ -95,16 +107,29 @@ function AdminNotices() {
     }
   };
 
+  const filteredNotices = notices.filter((notice) =>
+    `${notice.title} ${notice.content}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
     <div className="admin-notices-page">
       <div className="admin-notices-header">
-        <h1>Notice Management</h1>
-        <p>Create, view, update, and delete NSA notices.</p>
+        <div>
+          <h1>
+            <FaBullhorn /> Notice Management
+          </h1>
+          <p>Create, update, and manage NSA announcements.</p>
+        </div>
       </div>
 
       <div className="admin-notices-layout">
         <form className="notice-form-card" onSubmit={handleSubmit}>
-          <h2>{editingId ? "Edit Notice" : "Create Notice"}</h2>
+          <div className="form-title">
+            <h2>{editingId ? "Edit Notice" : "Create Notice"}</h2>
+            {editingId ? <FaEdit /> : <FaPlus />}
+          </div>
 
           <label>Notice Title</label>
           <input
@@ -120,7 +145,7 @@ function AdminNotices() {
             name="content"
             value={formData.content}
             onChange={handleChange}
-            placeholder="Enter notice content"
+            placeholder="Write notice content here..."
             required
           />
 
@@ -130,57 +155,75 @@ function AdminNotices() {
 
           {editingId && (
             <button type="button" className="cancel-btn" onClick={resetForm}>
-              Cancel Edit
+              <FaTimes /> Cancel Edit
             </button>
           )}
         </form>
 
-        <section className="notices-table-card">
-          <h2>All Notices</h2>
+        <section className="notices-list-card">
+          <div className="notices-list-header">
+            <div>
+              <h2>All Notices</h2>
+              <p>
+                Showing {filteredNotices.length} of {notices.length} notices
+              </p>
+            </div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Created At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+            <div className="notice-search-box">
+              <FaSearch />
+              <input
+                placeholder="Search notices..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
 
-            <tbody>
-              {notices.length === 0 ? (
-                <tr>
-                  <td colSpan="5">No notices found</td>
-                </tr>
-              ) : (
-                notices.map((notice) => (
-                  <tr key={notice.notice_id}>
-                    <td>{notice.notice_id}</td>
-                    <td>{notice.title}</td>
-                    <td>{notice.content}</td>
-                    <td>{notice.created_at?.slice(0, 10)}</td>
-                    <td>
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEdit(notice)}
-                      >
-                        Edit
-                      </button>
+          {filteredNotices.length === 0 ? (
+            <div className="empty-notices">
+              <h3>No notices found</h3>
+              <p>Create a notice or change your search keyword.</p>
+            </div>
+          ) : (
+            <div className="notice-card-grid">
+              {filteredNotices.map((notice) => (
+                <div className="notice-card" key={notice.notice_id}>
+                  <div className="notice-card-top">
+                    <span className="notice-badge">
+                      <FaBullhorn /> Notice
+                    </span>
 
-                      <button
-                        className="delete-btn"
-                        onClick={() => handleDelete(notice.notice_id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                    <span className="notice-date">
+                      <FaCalendarAlt />{" "}
+                      {notice.created_at
+                        ? new Date(notice.created_at).toLocaleDateString()
+                        : "N/A"}
+                    </span>
+                  </div>
+
+                  <h3>{notice.title}</h3>
+
+                  <p>{notice.content}</p>
+
+                  <div className="notice-actions">
+                    <button
+                      className="edit-btn"
+                      onClick={() => handleEdit(notice)}
+                    >
+                      <FaEdit /> Edit
+                    </button>
+
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(notice.notice_id)}
+                    >
+                      <FaTrash /> Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </div>
