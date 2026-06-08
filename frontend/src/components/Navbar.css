@@ -1,6 +1,6 @@
 .navbar {
   height: 80px;
-  background: linear-gradient(90deg, #7f1712, #9b1c1c);
+  background: linear-gradient(90deg,#550e06, #550e06);
   display: grid;
   grid-template-columns: 180px 1fr 120px;
   align-items: center;
