@@ -8,6 +8,7 @@ export default defineConfig({
     port: Number(process.env.PORT) || 4173,
     allowedHosts: [
       "handsome-generosity-production-8a66.up.railway.app",
+      "sabinbahala.com.np",
     ],
   },
 });
