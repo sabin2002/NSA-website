@@ -2,14 +2,6 @@ import { useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaBriefcase,
-  FaCalendarAlt,
-  FaBullhorn,
-  FaBookOpen,
-  FaInfoCircle,
-  FaFacebook,
-  FaInstagram,
-  FaYoutube,
-  FaEnvelope,
   FaBullseye,
   FaEye,
   FaUsers,
@@ -18,6 +10,10 @@ import {
   FaStar,
   FaGraduationCap,
   FaHandsHelping,
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaEnvelope,
 } from "react-icons/fa";
 import "./About.css";
 
@@ -26,8 +22,6 @@ function About() {
 
   return (
     <div className="about-page">
-      
-
       <section className="about-hero">
         <h1>About Us</h1>
         <div className="divider"></div>
@@ -67,19 +61,27 @@ function About() {
               <div className="service-card purple">
                 <FaGraduationCap />
                 <h4>Academic Support</h4>
-                <p>We provide resources and guidance to help students excel in their studies.</p>
+                <p>
+                  We provide resources and guidance to help students excel in
+                  their studies.
+                </p>
               </div>
 
               <div className="service-card green">
                 <FaUsers />
                 <h4>Community Building</h4>
-                <p>We organize events and activities to bring Nepali students together.</p>
+                <p>
+                  We organize events and activities to bring Nepali students
+                  together.
+                </p>
               </div>
 
               <div className="service-card orange">
                 <FaBriefcase />
                 <h4>Career Development</h4>
-                <p>We share job opportunities, internships, and career guidance.</p>
+                <p>
+                  We share job opportunities, internships, and career guidance.
+                </p>
               </div>
 
               <div className="service-card blue">
@@ -91,18 +93,23 @@ function About() {
               <div className="service-card pink">
                 <FaHandsHelping />
                 <h4>Welfare & Support</h4>
-                <p>We support students in need and help them through challenges.</p>
+                <p>
+                  We support students in need and help them through challenges.
+                </p>
               </div>
             </div>
           </section>
 
           <section className="team-section">
             <h2>Our Team</h2>
-            <p>Meet the passionate students working behind NSA to serve the community.</p>
+            <p>
+              Meet the passionate students working behind NSA to serve the
+              community.
+            </p>
 
             <div className="team-grid">
               <div className="team-card">
-                <img src="" />
+                <img src="" alt="Glen Minlan" />
                 <div>
                   <h4>Glen Minlan</h4>
                   <span>President</span>
@@ -111,14 +118,14 @@ function About() {
               </div>
 
               <div className="team-card">
-                <img src="" />
+                <img src="" alt="Thokar Alisha" />
                 <div>
                   <h4>Thokar Alisha</h4>
                   <span>Vice President</span>
                   <p>Supporting the president and overseeing operations.</p>
                 </div>
               </div>
-
+            </div>
 
             <button className="join-btn" onClick={() => navigate("/register")}>
               Join Us
@@ -128,24 +135,28 @@ function About() {
 
         <aside className="about-right">
           <div className="mission-card">
-            <div className="mission-icon red"><FaBullseye /></div>
+            <div className="mission-icon red">
+              <FaBullseye />
+            </div>
             <div>
               <h2>Our Mission</h2>
               <p>
                 To empower Nepali students in Korea by providing a supportive
-                network, enhancing academic and professional growth, and promoting
-                unity, culture, and leadership.
+                network, enhancing academic and professional growth, and
+                promoting unity, culture, and leadership.
               </p>
             </div>
           </div>
 
           <div className="mission-card">
-            <div className="mission-icon blue"><FaEye /></div>
+            <div className="mission-icon blue">
+              <FaEye />
+            </div>
             <div>
               <h2>Our Vision</h2>
               <p>
-                To be a leading platform that connects, inspires, and uplifts every
-                Nepali student in Korea.
+                To be a leading platform that connects, inspires, and uplifts
+                every Nepali student in Korea.
               </p>
             </div>
           </div>
@@ -173,7 +184,9 @@ function About() {
               <FaShieldAlt />
               <div>
                 <h4>Integrity</h4>
-                <p>We act with honesty, transparency, and responsibility.</p>
+                <p>
+                  We act with honesty, transparency, and responsibility.
+                </p>
               </div>
             </div>
 
@@ -189,7 +202,9 @@ function About() {
           <div className="contact-card">
             <h2>Get In Touch</h2>
             <p>We’d love to hear from you!</p>
-            <p><FaEnvelope /> info@nsa-korea.org</p>
+            <p>
+              <FaEnvelope /> info@nsa-korea.org
+            </p>
             <p>🌐 www.nsa-korea.org</p>
             <p>📍 Seoul, Republic of Korea</p>
 
@@ -202,28 +217,6 @@ function About() {
           </div>
         </aside>
       </main>
-
-      <footer className="about-footer">
-        <div>
-          <h3>Nepalese Student Association (NSA)</h3>
-          <p>Connecting Students in Korea 🇰🇷 🇳🇵</p>
-        </div>
-
-        <div>
-          <h3>Quick Links</h3>
-          <p>Home | Jobs | Events | Announcements | Resources | About Us</p>
-        </div>
-
-        <div>
-          <h3>Follow Us</h3>
-          <p>Facebook · Instagram · YouTube · Email</p>
-        </div>
-
-        <div>
-          <p>© 2026 Nepalese Student Association.</p>
-          <p>All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
