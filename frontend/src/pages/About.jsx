@@ -102,41 +102,23 @@ function About() {
 
             <div className="team-grid">
               <div className="team-card">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" />
+                <img src="" />
                 <div>
-                  <h4>Sujan Gurung</h4>
+                  <h4>Glen Minlan</h4>
                   <span>President</span>
                   <p>Leading the NSA and representing students.</p>
                 </div>
               </div>
 
               <div className="team-card">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" />
+                <img src="" />
                 <div>
-                  <h4>Pragya Thapa</h4>
+                  <h4>Thokar Alisha</h4>
                   <span>Vice President</span>
                   <p>Supporting the president and overseeing operations.</p>
                 </div>
               </div>
 
-              <div className="team-card">
-                <img src="https://randomuser.me/api/portraits/men/45.jpg" />
-                <div>
-                  <h4>Ramesh Adhikari</h4>
-                  <span>General Secretary</span>
-                  <p>Managing communication and documentation.</p>
-                </div>
-              </div>
-
-              <div className="team-card">
-                <img src="https://randomuser.me/api/portraits/women/55.jpg" />
-                <div>
-                  <h4>Anisha Karki</h4>
-                  <span>Event Coordinator</span>
-                  <p>Organizing events and engagement activities.</p>
-                </div>
-              </div>
-            </div>
 
             <button className="join-btn" onClick={() => navigate("/register")}>
               Join Us
