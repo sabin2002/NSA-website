@@ -7,7 +7,24 @@ const db = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_NAME,
+
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+
+  // Fixes TCP_TOO_OLD on Railway
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 10000,
+  idleTimeout: 60000,
+  connectTimeout: 10000,
 });
+
+// Ping every 30s to keep connections alive
+setInterval(() => {
+  db.query("SELECT 1", (err) => {
+    if (err) console.log("DB keep-alive failed:", err.message);
+  });
+}, 30000);
 
 db.getConnection((err, connection) => {
   if (err) {
